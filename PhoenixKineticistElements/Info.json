@@ -1,0 +1,12 @@
+﻿{
+  "Id": "PhoenixKineticistElements",
+  "DisplayName": "Phoenix's Kineticist Elements",
+  "Author": "",
+  "Version": "1.0.0",
+  "ManagerVersion": "0.27.11",
+  "Requirements": [],
+  "AssemblyName": "PhoenixKineticistElements.dll",
+  "EntryMethod": "PhoenixKineticistElements.Main.Load",
+  "HomePage": "",
+  "Repository": ""
+}
