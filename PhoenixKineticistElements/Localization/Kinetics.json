@@ -1,0 +1,62 @@
+[
+  {
+    "Key": "LightFocus.Name",
+    "enGB": "Light"
+  },
+  {
+    "Key": "LightFocus.Desc",
+    "enGB": "One of the newer manifestations of power seen from kineticists, some see photokineticists as heavenly messengers, carrying the light of their god from on high. This of course isn’t always the case, as photokineticists are more often than not tricksters, their powers focusing on deception and other such tricks. Able to bend light to their whims, they more often than not end up tricking their opponents with an array of various illusions and such, making for very frustrating opponents on the field of battle.\n Photokineticists tend to be more secretive than others, revealing as little as possible about themselves. To a photokineticist, the chance to create a new illusion even more convincing than their last is often motivation enough to continue adventuring, enjoying the challenge of honing their abilities. "
+  },
+  {
+    "Key": "LightBlastAbility.Name",
+    "enGB": "Light Blast"
+  },
+  {
+    "Key": "LightBlast.Name",
+    "enGB": "Light Blast"
+  },
+  {
+    "Key": "LightBlastAbility.Desc",
+    "enGB": "Element(s) light; Type simple blast (Sp); Level --; Burn 0; Aura conjuration (creation) [light]\nBlast Type physical; Damage bludgeoning, piercing, or slashing\nYou slam into a single foe with a blast of solid light "
+  },
+  {
+    "Key": "LightClassSkills.Name",
+    "enGB": "Light Class Skill"
+  },
+  {
+    "Key": "LightClassSkills.Desc",
+    "enGB": "A photokineticist adds Knowledge (nature) and Stealth to their list of class skills."
+  },
+  {
+    "Key": "IllusoryDuplicates.Name",
+    "enGB": "Illusory Duplicates"
+  },
+  {
+    "Key": "IllusoryDuplicates.Desc",
+    "enGB": "Element(s) light; Type defense (Sp); Level --; Burn 0\nYou are capable of shaping the light to your whims, creating an illusory duplicate of yourself in your square as per the mirror image spell. A destroyed illusory duplicate will reform at the rate of 1 per 5 minutes. You can accept 1 point of burn to create another illusory duplicate that will reform at the same rate until your burn is removed. At 4th level and every 4 levels thereafter, you may accept 1 additional point of burn to create an additional illusory duplicate, up to a maximum of 6 at 20th level.\nWhenever you accept a point of burn using a light wild talent, you can reform 1 illusory duplicate. You can dismiss or restore this effect as an immediate action. ."
+  },
+  {
+    "Key": "LightKineticBlade.Name",
+    "enGB": "Light Blast — Kinetic Blade"
+  },
+  {
+    "Key": "GloriousBlastAbility.Name",
+    "enGB": "Glorious Blast"
+  },
+  {
+    "Key": "GloriousBlast.Name",
+    "enGB": "Glorious Blast"
+  },
+  {
+    "Key": "GloriousBlastAbility.Desc",
+    "enGB": "Element(s) light; Type composite blast (Sp); Level --; Burn 2; Aura conjuration (creation) [light]\nBlast Type physical; Damage bludgeoning\nYou slam into a single foe with a blast of solid light "
+  },
+  {
+    "Key": "GloriousKineticBlade.Name",
+    "enGB": "Glorious Blast — Kinetic Blade"
+  }
+
+
+
+
+]
