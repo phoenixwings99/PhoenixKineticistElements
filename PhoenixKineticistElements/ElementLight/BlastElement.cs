@@ -1,4 +1,5 @@
-﻿using Kingmaker.RuleSystem.Rules.Damage;
+﻿using Kingmaker.Blueprints.Classes.Spells;
+using Kingmaker.RuleSystem.Rules.Damage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +23,15 @@ namespace PhoenixKineticistElements.ElementLight
         public bool Composite { get; set; }
 
         public Sprite DefaultIcon { get; set; }
+        public Sprite DefaultIconMelee { get; set; }
 
         public DamageTypeDescription[] damageType {  get; set; } = new DamageTypeDescription[0];
 
         public int Burn;
 
         public string weaponfx { get; set; }
+
+        public SpellDescriptor spellDescriptors { get; set; } = SpellDescriptor.None;
 
         
     }

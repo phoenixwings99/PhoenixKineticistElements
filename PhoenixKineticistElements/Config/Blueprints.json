@@ -4,8 +4,10 @@
   "NewBlueprints": {
     "LightBlastFeature": "A06EC6C0-92DB-4E40-B438-2932CB138CD7",
     "BioluminescentBlastFeature": "519F7A00-9C7C-4FBC-BA0E-C50CA4B29B1B",
+    "CrystalBlastFeature": "948BD692-A37A-4CB6-A129-0BBDBF2B2F9F",
     "AuroraBlastFeature": "D8E0DE4B-66AC-44D0-B1B6-68A611F9DCF9",
-    "GloriousBlastFeature": "56FF6626-A7B1-465B-9F16-E6F146DD2A23"
+    "GloriousBlastFeature": "56FF6626-A7B1-465B-9F16-E6F146DD2A23",
+    "RainbowBlastFeature": "6732B69D-44CB-41D7-B500-1D4F513641AD"
   },
   "DerivedBlueprintMasters": {
     "ExtendedRangeXBlastAbility": "47e78a76-e302-4615-995a-03331be6d730",

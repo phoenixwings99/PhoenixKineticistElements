@@ -4,6 +4,7 @@ using BlueprintCore.Actions.Builder.ContextEx;
 using BlueprintCore.Blueprints.Configurators.Items.Ecnchantments;
 using BlueprintCore.Blueprints.Configurators.Items.Weapons;
 using BlueprintCore.Blueprints.Configurators.UnitLogic.ActivatableAbilities;
+using BlueprintCore.Blueprints.Configurators.UnitLogic.Properties;
 using BlueprintCore.Blueprints.CustomConfigurators;
 using BlueprintCore.Blueprints.CustomConfigurators.Classes;
 using BlueprintCore.Blueprints.CustomConfigurators.Classes.Selection;
@@ -12,6 +13,7 @@ using BlueprintCore.Blueprints.CustomConfigurators.UnitLogic.Buffs;
 using BlueprintCore.Conditions.Builder;
 using BlueprintCore.Conditions.Builder.BasicEx;
 using BlueprintCore.Utils;
+using BlueprintCore.Utils.Types;
 using HarmonyLib;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
@@ -26,14 +28,20 @@ using Kingmaker.RuleSystem.Rules.Damage;
 using Kingmaker.UI.MVVM._ConsoleView.InGame;
 using Kingmaker.UnitLogic.Abilities;
 using Kingmaker.UnitLogic.Abilities.Blueprints;
+using Kingmaker.UnitLogic.Abilities.Components.CasterCheckers;
+using Kingmaker.UnitLogic.ActivatableAbilities;
+using Kingmaker.UnitLogic.Buffs;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
+using Kingmaker.UnitLogic.Buffs.Components;
 using Kingmaker.UnitLogic.Class.Kineticist;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Components;
 using Kingmaker.UnitLogic.Mechanics.Conditions;
 using Kingmaker.Visual.Animation.Kingmaker.Actions;
 using Owlcat.Runtime.UI.Utility;
+using PhoenixKineticistElements.Components;
 using System;
+using System.Xml.Linq;
 using TabletopTweaks.Core.Config;
 using TabletopTweaks.Core.Utilities;
 using Unity.Mathematics;
@@ -50,6 +58,7 @@ namespace PhoenixKineticistElements.ElementLight
 
 
         private static Sprite baseIcon;
+        private static Sprite baseIconMelee;
 
         private static BlueprintFeature kinBlade;
         private static BlueprintBuff kinBladeBuff;
@@ -75,20 +84,26 @@ namespace PhoenixKineticistElements.ElementLight
         {
 
             baseIcon = BlueprintTool.Get<BlueprintAbility>("bf0accce250381a44b857d4af6c8e10d").Icon;//Searing Light
+            baseIconMelee = BlueprintTool.Get<BlueprintActivatableAbility>("24ee96e7c589333468da975fd3892a8d").Icon;//Searing Light
+            
             string holyeffect = BlueprintTool.Get<BlueprintWeaponEnchantment>("28a9964d81fedae44bae3ca45710c140").WeaponFxPrefab.AssetId;
             kinBlade = BlueprintTool.Get<BlueprintFeature>("9ff81732daddb174aa8138ad1297c787");
             kinBladeBuff = BlueprintTool.Get<BlueprintBuff>("426a9c079ee7ac34aa8e0054f2218074");
             KinBladeInventoryIcon = BlueprintTool.Get<BlueprintItemWeapon>("43ff67143efb86d4f894b10577329050").Icon;
 
+
+            //c4b0d8b4786a1244d9fbc4b424931b83 sunbeam for solar blast
+            //c7734162c01abdc478418bfb286ed7a5 lightning bolt for lightning blast
             LightBlast = new()
             {
                 Name = "Light",
                 Composite = false,
                 Physical = true,
                 DefaultIcon = baseIcon,
+                DefaultIconMelee = baseIconMelee,
                 FeatureGuid = "A06EC6C0-92DB-4E40-B438-2932CB138CD7",
                 damageType = new[] { BPSDamage() },
-                ProjectileGuid = "c4b0d8b4786a1244d9fbc4b424931b83",
+                ProjectileGuid = "2511627d593387d4d89004bec111ba31", //Searing Light
                 weaponfx = holyeffect
 
             };
@@ -99,10 +114,13 @@ namespace PhoenixKineticistElements.ElementLight
                 Composite = false,
                 Physical = true,
                 DefaultIcon = baseIcon,
+                DefaultIconMelee = baseIconMelee,
                 FeatureGuid = "D8E0DE4B-66AC-44D0-B1B6-68A611F9DCF9",
                 damageType = new[] { BDamage(), ColdDamage() },
-                ProjectileGuid = "c4b0d8b4786a1244d9fbc4b424931b83",
-                weaponfx = holyeffect
+                ProjectileGuid = "5769363a427374f428490092c57820a7", //Prismatic spray
+                weaponfx = holyeffect,
+                spellDescriptors = SpellDescriptor.Cold,
+                Burn =2
 
             };
 
@@ -112,10 +130,27 @@ namespace PhoenixKineticistElements.ElementLight
                 Composite = true,
                 Physical = true,
                 DefaultIcon = baseIcon,
+                DefaultIconMelee = baseIconMelee,
                 FeatureGuid = "519F7A00-9C7C-4FBC-BA0E-C50CA4B29B1B",
                 damageType = new[] { BSDamage() },
                 ProjectileGuid = "c4b0d8b4786a1244d9fbc4b424931b83",
-                weaponfx = holyeffect
+                weaponfx = holyeffect,
+                Burn = 2
+
+            };
+
+            CrystalBlast = new()
+            {
+                Name = "Crystal",
+                Composite = true,
+                Physical = true,
+                DefaultIcon = baseIcon,
+                DefaultIconMelee = baseIconMelee,
+                FeatureGuid = "948BD692-A37A-4CB6-A129-0BBDBF2B2F9F",
+                damageType = new[] { BSDamage() },
+                ProjectileGuid = "c4b0d8b4786a1244d9fbc4b424931b83",
+                weaponfx = holyeffect,
+                Burn = 2
 
             };
 
@@ -125,26 +160,42 @@ namespace PhoenixKineticistElements.ElementLight
                 Composite = true,
                 Physical = true,
                 DefaultIcon = baseIcon,
+                DefaultIconMelee = baseIconMelee,
                 FeatureGuid = "56FF6626-A7B1-465B-9F16-E6F146DD2A23",
                 damageType = new[] { BDamage() },
                 ProjectileGuid = "c4b0d8b4786a1244d9fbc4b424931b83",
-                weaponfx = holyeffect
+                weaponfx = holyeffect,
+                Burn = 2
 
             };
 
+            RainbowBlast = new()
+            {
+                Name = "Rainbow",
+                Composite = true,
+                Physical = true,
+                DefaultIcon = baseIcon,
+                DefaultIconMelee = baseIconMelee,
+                FeatureGuid = "6732B69D-44CB-41D7-B500-1D4F513641AD",
+                damageType = new[] { BDamage() },
+                ProjectileGuid = "54a9377a7b01f7d44a56e7713f939db6", //Azata Rainbow Arrows
+                weaponfx = holyeffect,
+                Burn = 2
+
+            };
+
+
             ConfigureBlast(LightBlast);
+
+            ConfigureBlast(AuroraBlast);
+
+            ConfigureBlast(RainbowBlast);
 
             ConfigureBlast(GloriousBlast);
 
-            //CreateLightBlastVariant_Base();
 
-            //CreateLightBlastVariant_Extended();
 
-            //CreateLightBlastBaseAbility();
-
-            //CreateLightBlastFeature();
-
-            //CreateIllusoryDuplicates();
+            CreateIllusoryDuplicates();
 
             CreateLightBlastProgression();
 
@@ -157,8 +208,15 @@ namespace PhoenixKineticistElements.ElementLight
             //Dazzling Infusion
             AddToSubstanceInfusion(LightBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
             AddToSubstanceInfusion(GloriousBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
+            AddToSubstanceInfusion(RainbowBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
+            AddToSubstanceInfusion(AuroraBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
 
             //Flash Infusion
+
+            AddToSubstanceInfusion(LightBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
+            AddToSubstanceInfusion(GloriousBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
+            AddToSubstanceInfusion(RainbowBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
+            AddToSubstanceInfusion(AuroraBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
         }
 
         private static void ConfigureBlast(BlastElement element)
@@ -175,8 +233,8 @@ namespace PhoenixKineticistElements.ElementLight
             var kbxblastburnability = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("KineticBladeXBlastBurnAbility");
             var kbxblastdamage = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XBlastBladeDamage");
             var kbxenchantment = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XKineticBladeEnchantment");
-            
-            
+
+
             FeatureConfigurator.New($"{element.Name}BlastFeature", element.FeatureGuid)
                 .SetDisplayName($"{element.Name}BlastAbility.Name")
                 .SetDescription($"{element.Name}BlastAbility.Desc")
@@ -220,7 +278,7 @@ namespace PhoenixKineticistElements.ElementLight
 
             //TODO INSERT SETTINGS HERE
 
-           
+
 
             CreateXBlastFeature(element);
 
@@ -243,6 +301,12 @@ namespace PhoenixKineticistElements.ElementLight
             CreateXBlastBladeDamage(element);
 
             XKineticBladeEnchantment(element);
+
+            AbilityConfigurator.For("80f10dc9181a0f64f97a9f7ac9f47d65").EditComponent<AbilityCasterHasFacts>(x =>
+            {
+
+                x.m_Facts = x.m_Facts.AddItem<BlueprintUnitFactReference>(BlueprintTool.GetRef<BlueprintUnitFactReference>($"KineticBlade{element.Name}BlastBuff")).ToArray();
+            }).Configure();
         }
 
 
@@ -274,8 +338,9 @@ namespace PhoenixKineticistElements.ElementLight
                .Configure();
 
             ProgressionConfigurator.New("SecondaryElementLight", "B36683B6-AB79-4029-9E04-E73E89070579")
-                .AddActivateTrigger(conditions: ConditionsBuilder.New().HasFact(unit: new FactOwner(), fact: "ElementalFocusLight")
-                .HasFact(unit: new FactOwner(), fact: "KineticKnightElementalFocusLight"),
+                .AddActivateTrigger(conditions: ConditionsBuilder.New()
+                    .HasFact(unit: new FactOwner(), fact: "ElementalFocusLight")
+                    .HasFact(unit: new FactOwner(), fact: "KineticKnightElementalFocusLight"),
                     actions: ActionsBuilder.New().AddFact(unit: new FactOwner(), fact: "GloriousBlastFeature"))
                 .AddFacts(facts: new() { "cb30a291c75def84090430fbf2b5c05e" })
                 .AddFeatureIfHasFact(checkedFact: "LightBlastFeature", feature: "LightBlastFeature", not: true)
@@ -289,8 +354,9 @@ namespace PhoenixKineticistElements.ElementLight
                 .Configure();
 
             ProgressionConfigurator.New("ThirdElementLight", "0EF27AAC-B72F-484F-9C83-51FE3B448E30")
-                .AddActivateTrigger(conditions: ConditionsBuilder.New().HasFact(unit: new FactOwner(), fact: "ElementalFocusLight")
-                .HasFact(unit: new FactOwner(), fact: "KineticKnightElementalFocusLight"),
+                .AddActivateTrigger(conditions: ConditionsBuilder.New()
+                    .HasFact(unit: new FactOwner(), fact: "ElementalFocusLight")
+                    .HasFact(unit: new FactOwner(), fact: "KineticKnightElementalFocusLight"),
                     actions: ActionsBuilder.New().AddFact(unit: new FactOwner(), fact: "GloriousBlastFeature"))
                 .AddFacts(facts: new() { "cb30a291c75def84090430fbf2b5c05e" })
                 .AddFeatureIfHasFact(checkedFact: "LightBlastFeature", feature: "LightBlastFeature", not: true)
@@ -365,11 +431,13 @@ namespace PhoenixKineticistElements.ElementLight
                 .SetIcon(baseIcon)
                 .SetIsClassFeature(true)
                 .AddToClasses("42a455d9ec1ad924d889272429eb8391")
+                .AddFeatureIfHasFact($"LightBlastBase", feature: $"LightBlastBase", not: true)
+                .AddFeatureIfHasFact(checkedFact: $"9ff81732daddb174aa8138ad1297c787", feature: $"LightKineticBladeFeature")
                 .AddToLevelEntries(1, "LightBlastFeature")
                 .SetHideInUI(true)
                 .SetHideInCharacterSheetAndLevelUp(true)
                 .Configure();
-
+            
         }
 
         
@@ -386,6 +454,7 @@ namespace PhoenixKineticistElements.ElementLight
                 .AddAbilityVariants([$"{element.Name}BlastAbility", $"ExtendedRange{element.Name}BlastAbility"])
                 .AddAbilityShowIfCasterHasFact(unitFact: "1f3a15a3ae8a5524ab8b97f469bf4e3d")//Focus Selection
                 .AddAbilityKineticist(amount: 1)
+                .AddSpellDescriptorComponent(element.spellDescriptors)
                 .SetIcon(element.DefaultIcon)
                 .SetType(AbilityType.Special)
                 .SetRange(AbilityRange.Close)
@@ -513,6 +582,7 @@ namespace PhoenixKineticistElements.ElementLight
 
 
             return abilityConfigurator.SetIcon(baseIcon)
+                 .AddSpellDescriptorComponent(element.spellDescriptors)
                 .SetType(AbilityType.Special)
                 .SetActionType(Kingmaker.UnitLogic.Commands.Base.UnitCommand.CommandType.Standard)
                 .SetAvailableMetamagic(availableMetamagic: new[] { Metamagic.Empower, Metamagic.Maximize, Metamagic.Quicken,
@@ -574,7 +644,7 @@ namespace PhoenixKineticistElements.ElementLight
                 .AddRestrictionCanUseKineticBlade()
                 .SetDescription(kinBlade.m_Description)
                 .SetGroup(Kingmaker.UnitLogic.ActivatableAbilities.ActivatableAbilityGroup.FormInfusion)
-                .SetIcon(element.DefaultIcon)
+                .SetIcon(element.DefaultIconMelee)
                 .SetDeactivateImmediately(true)
                 .SetDeactivateIfOwnerUnconscious(true)
                 .SetActivationType(Kingmaker.UnitLogic.ActivatableAbilities.AbilityActivationType.Immediately)
@@ -587,6 +657,7 @@ namespace PhoenixKineticistElements.ElementLight
         private static void CreateKineticBladeXBuffAbility(BlastElement element)
         {
             BuffConfigurator.For($"KineticBlade{element.Name}BlastBuff")
+                 .AddSpellDescriptorComponent(element.spellDescriptors)
                 .AddKineticistBlade(blade: $"{element.Name}KineticBladeWeapon")
                 .SetFlags(BlueprintBuff.Flags.HiddenInUi, BlueprintBuff.Flags.StayOnDeath)
                 .SetIsClassFeature(true)
@@ -628,6 +699,7 @@ namespace PhoenixKineticistElements.ElementLight
                     }
                 }))
                 .AddAbilityKineticBlade()
+                 .AddSpellDescriptorComponent(element.spellDescriptors)
                 .SetType(AbilityType.Special)
                 .SetRange(AbilityRange.Personal)
                 .SetCanTargetSelf(true)
@@ -645,6 +717,7 @@ namespace PhoenixKineticistElements.ElementLight
             ContextDiceValue damageDiceValue = element.Composite ? (element.Physical ? PhysicalCompositeBlastDice() : EnergyCompositeBlastDice()) : element.Physical ? PhysicalSimpleBlastDice() : EnergySimpleBlastDice();
 
             AbilityConfigurator.For($"{element.Name}BlastBladeDamage")
+                 .AddSpellDescriptorComponent(element.spellDescriptors)
                 .SetDisplayName($"{element.Name}KineticBlade.Name")
                 .AddAbilityEffectRunAction(BuildChainableDamageAction(element))
                 .AddAbilityShowIfCasterHasFact(unitFact: "4d39ccef7b5b2e9458e8599eae3c3be0", not: false)
@@ -865,18 +938,7 @@ namespace PhoenixKineticistElements.ElementLight
             };
         }
 
-        private static DamageTypeDescription BColdDamage()
-        {
-            return new()
-            {
-                Type = Kingmaker.RuleSystem.Rules.Damage.DamageType.Physical,
-                Physical = new()
-                {
-                    Form = Kingmaker.Enums.Damage.PhysicalDamageForm.Bludgeoning | Kingmaker.Enums.Damage.PhysicalDamageForm.Piercing |
-                               Kingmaker.Enums.Damage.PhysicalDamageForm.Slashing,
-                }
-            };
-        }
+
 
         private static DamageTypeDescription ColdDamage()
         {
@@ -928,20 +990,6 @@ namespace PhoenixKineticistElements.ElementLight
 
 
         #endregion
-        private static void CreateLightBlast()
-        {
-
-
-            string progGuid = "C83F4371-B2F2-4A88-9D05-85781723A754";
-            string lightblastfeatureguid = "EB5AD780-4AD4-43A4-BD77-5F8B83C53F30";
-            string lightbaseabilityguid = "9A8E6020-DF82-43C5-83B5-45A02E26470C";
-            string lightbladefeatureguid = "00DB5B41-56CE-4D66-802E-94D3B205C65D";
-            string lightbladeacticate = "0B735BB3-8D2C-4B1C-BD46-8BFC17F3CD3A";
-            string lightbladeweaponguid = "F1ED7C1C-B0BA-4D9E-B4B0-1C49FC9DD7E5";
-            string lightbladedamageguid = "32BEC956-1014-4BDB-9BEE-F201438E1A5E";
-            string lightbladeburnguid = "32BEC956-1014-4BDB-9BEE-F201438E1A5E";
-            throw new NotImplementedException();
-        }
 
 
 
@@ -967,73 +1015,104 @@ namespace PhoenixKineticistElements.ElementLight
 
         private static void CreateIllusoryDuplicates()
         {
-            string guid = "E11D1E1A-936C-4C66-8DB2-2589A40C43E3";
-            FeatureConfigurator.New("IllusoryDuplicatesFeature", guid)
+            AbilityResourceConfigurator.New("IllusoryDuplicatesResource", "11F0E81B-180C-4FBD-8C7E-EEEE5E3DF410")
+                .SetLocalizedName("IllusoryDuplicates.Name")
+                .SetLocalizedDescription("IllusoryDuplicates.Desc")
+                .SetMaxAmount(ResourceAmountBuilder.New(0).IncreaseByLevelStartPlusDivStep(classes: ["42a455d9ec1ad924d889272429eb8391"], startingLevel: 1, startingBonus: 1, levelsPerStep: 4, bonusPerStep: 1))
+                .Configure();
+
+
+            BuffConfigurator.New("IllusoryDuplicatesEffectBuff", "9EE017FF-9415-4968-9FE0-87F9813D7677")
+                .SetIsClassFeature(true)
+                .SetFlags(BlueprintBuff.Flags.HiddenInUi, BlueprintBuff.Flags.StayOnDeath, BlueprintBuff.Flags.RemoveOnRest)
+                .SetStacking(StackingType.Replace)
+                .SetIsClassFeature(true)
+                .SetFxOnStart("bde04297a8dc74b4fa22480f4e40133b")
+                .AddMirrorImage(maxCount: 50, count: new ContextDiceValue()
+                {
+                    BonusValue = 1,
+                    DiceCountValue = new ContextValue()
+                    {
+                        ValueRank= AbilityRankType.StatBonus,
+                        ValueType = ContextValueType.Rank
+                        
+
+                    },           
+                    DiceType = Kingmaker.RuleSystem.DiceType.One
+
+                } )
+                
+                .SetRanks(0)
+                .Configure();
+
+            FeatureConfigurator.New("IllusoryDuplicatesUpgradeFeature", "7C1C0BA2-0371-482B-AE3C-E7B92302995D")
+                .SetHideInUI(true)
+                .SetDisplayName("IllusoryDuplicates.Name")
+                .SetAllowNonContextActions(false)
+                .SetRanks(20)
+                .SetReapplyOnLevelUp(false)
+                .SetIsClassFeature(true)
+                .Configure();
+
+            BuffConfigurator.New("IllusoryDuplicatesUpgradeBuff", "7B51854E-94FF-476A-8439-421A4F04F57E")
+                .SetIsClassFeature(true)
+                .SetFlags(BlueprintBuff.Flags.HiddenInUi, BlueprintBuff.Flags.StayOnDeath, BlueprintBuff.Flags.RemoveOnRest)
+                .SetIsClassFeature(true)
+                .SetStacking(StackingType.Stack)
+                .SetRanks(0)
+                .AddFacts(facts: new() { "IllusoryDuplicatesUpgradeFeature" }, doNotRestoreMissingFacts: false)
+                .Configure();
+
+            BuffConfigurator.For("IllusoryDuplicatesEffectBuff").AddContextRankConfig(ContextRankConfigs.FeatureRank(feature: "IllusoryDuplicatesUpgradeFeature", type: AbilityRankType.StatBonus)).Configure();
+
+            UnitPropertyConfigurator.New("IllusoryDuplicatesCurrentUpgrades", "15553116-1CF8-4DED-BE2F-5C962F332D2D")
+                .AddFactRankGetter("IllusoryDuplicatesUpgradeBuff")                
+                .Configure();
+
+            AbilityConfigurator.New("IllusoryDuplicatesAbility", "67E50DF0-B17A-4A17-848D-1899D1BF0374")
+                .SetDisplayName("IllusoryDuplicates.Name")
+                .SetDescription("IllusoryDuplicates.Desc")
+                .AddAbilityEffectRunAction(ActionsBuilder.New().ApplyBuffPermanent("IllusoryDuplicatesUpgradeBuff", isNotDispelable: true, isFromSpell: false, asChild: true).RemoveBuff("IllusoryDuplicatesEffectBuff").ApplyBuffPermanent("IllusoryDuplicatesEffectBuff", isNotDispelable: true, asChild: true))
+                
+                .SetCanTargetSelf(true)
+                .SetActionType(Kingmaker.UnitLogic.Commands.Base.UnitCommand.CommandType.Free) 
+                .SetAnimation(UnitAnimationActionCastSpell.CastAnimationStyle.Omni)
+                .SetRange(AbilityRange.Personal)
+                .SetIcon(BlueprintTool.Get<BlueprintAbility>("3e4ab69ada402d145a5e0ad3ad4b8564").Icon)
+                .AddAbilitySpawnFx(anchor: Kingmaker.UnitLogic.Abilities.Components.Base.AbilitySpawnFxAnchor.Caster, prefabLink: "790eb82d267bf0749943fba92b7953c2", time: Kingmaker.UnitLogic.Abilities.Components.Base.AbilitySpawnFxTime.OnApplyEffect)
+                /*.AddAbilityKineticist(amount: 1, wildTalentBurnCost: 1).AddComponent<AbilityRestrictionWildTalentCastCapper>(x =>
+                {
+
+                    x.m_facts = new List<BlueprintUnitFactReference>()
+                    {
+                        BlueprintTool.GetRef<BlueprintUnitFactReference>("IllusoryDuplicatesUpgradeBuff")
+
+                    };
+                    x.useCapResource = true;
+                    x.m_CapResource = BlueprintTool.GetRef<BlueprintAbilityResourceReference>("IllusoryDuplicatesResource");
+                    x.IsDefense = true;
+                    //x.m_MythicKineticDefense = BlueprintTool.GetRef<BlueprintFeatureReference>("MythicKineticDefenses");
+                })*/
+                .Configure();
+
+                    BuffConfigurator.New("IllusoryDuplicatesBuff", "4E958E74-4B24-42DF-B72C-6073BFEDAA73")
                 .SetDisplayName("IllusoryDuplicates.Name")
                 .SetDescription("IllusoryDuplicates.Desc")
 
 
                 .Configure();
 
-        }
+            string guid = "E11D1E1A-936C-4C66-8DB2-2589A40C43E3";
+            FeatureConfigurator.New("IllusoryDuplicatesFeature", guid)
+                .SetDisplayName("IllusoryDuplicates.Name")
+                .SetDescription("IllusoryDuplicates.Desc")
+                .AddAbilityResources(amount: 0, resource: "IllusoryDuplicatesResource", restoreAmount: true)
+                .AddComponent<AddIllusoryDuplicates>()
+                .AddFacts(facts: new() { "IllusoryDuplicatesAbility" })
+                .Configure();
 
+            
 
-        private static void CreateCompositeBlasts()
-        {
-
-            CreateAurora();
-            CreateBioluminescent();
-            CreateCrystal();
-            CreateGlorious();
-            CreateLightning();
-            CreateRainbow();
-            CreateSolar();
-
-            throw new NotImplementedException();
-        }
-
-        private static void CreateSolar()
-        {
-
-            throw new NotImplementedException();
-        }
-
-        private static void CreateRainbow()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void CreateLightning()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void CreateGlorious()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void CreateCrystal()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void CreateBioluminescent()
-        {
-            //{76D7AB9D-2DF3-475E-90E6-129632CF4825}
-            throw new NotImplementedException();
-        }
-
-        private static void CreateAurora()
-        {
-            string blastfeature = "96DB4404-63D2-4BEF-9B5E-D10F36A90DEC";
-            string baseability = "9FDCE3C8-087B-4440-8F96-6B7432DED9B7";
-            string bladefeatureguid = "7F6ACE56-5CF6-4627-86F1-71443EAD82D4";
-            string bladeactiveguid = "C2CC58BD-B4D7-4939-8C6A-A2028F3EF45C";
-            string bladeweaponguid = "D28D200F-E9FF-41E6-83D4-BDCDBF3D755E";
-            string bladedamageguid = "A8186198-B162-4486-AF31-F879833023D9";
-            string bladeburnguid = "08A7F135-2535-489C-9AFD-8E98BFBD0627";
-            throw new NotImplementedException();
         }
 
 

@@ -54,6 +54,38 @@
   {
     "Key": "GloriousKineticBlade.Name",
     "enGB": "Glorious Blast — Kinetic Blade"
+  },
+  {
+    "Key": "AuroraBlastAbility.Name",
+    "enGB": "Aurora Blast"
+  },
+  {
+    "Key": "AuroraBlast.Name",
+    "enGB": "Aurora Blast"
+  },
+  {
+    "Key": "AuroraBlastAbility.Desc",
+    "enGB": "Element(s) light and water; Type composite blast (Sp); Level --; Burn 2; Aura conjuration (creation) [cold, light]\nPrerequisite(s) cold blast, light blast\nBlast Type physical; Damage half bludgeoning, half cold\nYou infuse chunks of ice with dazzling lights.  "
+  },
+  {
+    "Key": "AuroraKineticBlade.Name",
+    "enGB": "Aurora Blast — Kinetic Blade"
+  },
+  {
+    "Key": "RainbowBlastAbility.Name",
+    "enGB": "Rainbow Blast"
+  },
+  {
+    "Key": "RainbowBlast.Name",
+    "enGB": "Rainbow Blast"
+  },
+  {
+    "Key": "RainbowBlastAbility.Desc",
+    "enGB": "Element(s) light and water; Type composite blast (Sp); Level --; Burn 2; Aura conjuration (creation) [cold, water]\nPrerequisite(s) water blast, light blast\nBlast Type physical; Damage bludgeoning\nYou reflect your light off misty water vapors to create a glorious rainbow to batter a foe.  "
+  },
+  {
+    "Key": "RainbowineticBlade.Name",
+    "enGB": "Rainbow Blast — Kinetic Blade"
   }
 
 
