@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace PhoenixKineticistElements.Components
 {
-    internal class AddIllusoryDuplicates : UnitFactComponentDelegate, IUnitLevelUpHandler, ISubscriber, IGlobalSubscriber
+    internal class EnableIllusoryDuplicates : UnitFactComponentDelegate, IUnitLevelUpHandler, ISubscriber, IGlobalSubscriber
     {
         
 
         public void HandleUnitAfterLevelUp(UnitEntityData unit, LevelUpController controller)
         {
             Main.Log.Log("AddIllusoryDuplicates leveluphandler firing");
-            base.Owner.Ensure<UnitPartIllusoryDuplicates>();
-            //base.Owner.Ensure<UnitPartIllusoryDuplicates>().DeployAllowedDuplicates();
+            base.Owner.Ensure<UnitPartIllusoryDuplicates>().DeployAllowedDuplicates();
             
+
         }
 
         public void HandleUnitBeforeLevelUp(UnitEntityData unit)

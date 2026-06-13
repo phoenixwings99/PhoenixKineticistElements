@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using Kingmaker.UnitLogic.Abilities;
 using Kingmaker.UnitLogic.Buffs;
 using Kingmaker.UnitLogic.Buffs.Components;
 using Kingmaker.UnitLogic.Parts;
@@ -69,16 +70,7 @@ namespace PhoenixKineticistElements.Overrides
                 Main.Log.Log($"UnitPartMirrorImage.Init prefix firing on {__instance.Owner.CharacterName} with {imagesCount} images");
                 Main.Log.Log($"MirrorImageFix is {(__instance.Fx is not null ? " not " :"")} null before init");
 
-                int[] backup = [];
-                __instance.VisualImages.CopyTo(backup);
-                __instance.VisualImages.Clear();
-                __instance.MechanicsImages.Clear();
-                foreach (int i in backup)
-                {
-                    __instance.VisualImages.Add(i);
-                    __instance.MechanicsImages.Add(i);
-                }
-
+                
                 for (int i = 1; i <= imagesCount; i++)
                 {
 
@@ -100,7 +92,19 @@ namespace PhoenixKineticistElements.Overrides
             }
         }
 
-        
+        public static void AddIllusoryDuplicate(this UnitPartMirrorImage mirrorImage)
+        {
+
+            
+        }
+
+        public static void AddIllusoryDuplicate(this UnitPartMirrorImage mirrorImage, int slot)
+        {
+
+            
+        }
+
+
         [HarmonyPatch(typeof(UnitPartMirrorImage), nameof(UnitPartMirrorImage.TryAbsorbHit))]
         class OverrideTryAbsorbHit
         {

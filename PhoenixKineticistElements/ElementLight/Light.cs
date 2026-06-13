@@ -1046,34 +1046,31 @@ namespace PhoenixKineticistElements.ElementLight
                 .Configure();
 
             FeatureConfigurator.New("IllusoryDuplicatesUpgradeFeature", "7C1C0BA2-0371-482B-AE3C-E7B92302995D")
-                .SetHideInUI(true)
-                .SetDisplayName("IllusoryDuplicates.Name")
-                .SetAllowNonContextActions(false)
-                .SetRanks(20)
-                .SetReapplyOnLevelUp(false)
-                .SetIsClassFeature(true)
                 .Configure();
 
             BuffConfigurator.New("IllusoryDuplicatesUpgradeBuff", "7B51854E-94FF-476A-8439-421A4F04F57E")
                 .SetIsClassFeature(true)
                 .SetFlags(BlueprintBuff.Flags.HiddenInUi, BlueprintBuff.Flags.StayOnDeath, BlueprintBuff.Flags.RemoveOnRest)
-                .SetIsClassFeature(true)
                 .SetStacking(StackingType.Stack)
-                .SetRanks(0)
-                .AddFacts(facts: new() { "IllusoryDuplicatesUpgradeFeature" }, doNotRestoreMissingFacts: false)
+                .SetRanks(50)
+                .AddNotDispelable()
                 .Configure();
 
-            BuffConfigurator.For("IllusoryDuplicatesEffectBuff").AddContextRankConfig(ContextRankConfigs.FeatureRank(feature: "IllusoryDuplicatesUpgradeFeature", type: AbilityRankType.StatBonus)).Configure();
+           
 
             UnitPropertyConfigurator.New("IllusoryDuplicatesCurrentUpgrades", "15553116-1CF8-4DED-BE2F-5C962F332D2D")
                 .AddFactRankGetter("IllusoryDuplicatesUpgradeBuff")                
                 .Configure();
 
+            BuffConfigurator.For("IllusoryDuplicatesEffectBuff").AddContextRankConfig(ContextRankConfigs.CustomProperty("IllusoryDuplicatesCurrentUpgrades", AbilityRankType.StatBonus)).Configure();
+
             AbilityConfigurator.New("IllusoryDuplicatesAbility", "67E50DF0-B17A-4A17-848D-1899D1BF0374")
                 .SetDisplayName("IllusoryDuplicates.Name")
                 .SetDescription("IllusoryDuplicates.Desc")
-                .AddAbilityEffectRunAction(ActionsBuilder.New().ApplyBuffPermanent("IllusoryDuplicatesUpgradeBuff", isNotDispelable: true, isFromSpell: false, asChild: true).RemoveBuff("IllusoryDuplicatesEffectBuff").ApplyBuffPermanent("IllusoryDuplicatesEffectBuff", isNotDispelable: true, asChild: true))
-                
+                .AddAbilityEffectRunAction(ActionsBuilder.New().ApplyBuffPermanent("IllusoryDuplicatesUpgradeBuff", isNotDispelable: true, isFromSpell: false, asChild: true)
+                    .RemoveBuff("IllusoryDuplicatesEffectBuff")
+                    .ApplyBuffPermanent("IllusoryDuplicatesEffectBuff", isNotDispelable: true, isFromSpell: false, asChild: true)
+                    )
                 .SetCanTargetSelf(true)
                 .SetActionType(Kingmaker.UnitLogic.Commands.Base.UnitCommand.CommandType.Free) 
                 .SetAnimation(UnitAnimationActionCastSpell.CastAnimationStyle.Omni)
@@ -1107,7 +1104,7 @@ namespace PhoenixKineticistElements.ElementLight
                 .SetDisplayName("IllusoryDuplicates.Name")
                 .SetDescription("IllusoryDuplicates.Desc")
                 .AddAbilityResources(amount: 0, resource: "IllusoryDuplicatesResource", restoreAmount: true)
-                .AddComponent<AddIllusoryDuplicates>()
+                .AddComponent<EnableIllusoryDuplicates>()
                 .AddFacts(facts: new() { "IllusoryDuplicatesAbility" })
                 .Configure();
 
