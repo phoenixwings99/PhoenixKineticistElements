@@ -1069,7 +1069,7 @@ namespace PhoenixKineticistElements.ElementLight
                 .SetRange(AbilityRange.Personal)
                 .SetIcon(BlueprintTool.Get<BlueprintAbility>("3e4ab69ada402d145a5e0ad3ad4b8564").Icon)
                 .AddAbilitySpawnFx(anchor: Kingmaker.UnitLogic.Abilities.Components.Base.AbilitySpawnFxAnchor.Caster, prefabLink: "790eb82d267bf0749943fba92b7953c2", time: Kingmaker.UnitLogic.Abilities.Components.Base.AbilitySpawnFxTime.OnApplyEffect)
-                /*.AddAbilityKineticist(amount: 1, wildTalentBurnCost: 1).AddComponent<AbilityRestrictionWildTalentCastCapper>(x =>
+                .AddAbilityKineticist(amount: 1, wildTalentBurnCost: 1).AddComponent<AbilityRestrictionWildTalentCastCapper>(x =>
                 {
 
                     x.m_facts = new List<BlueprintUnitFactReference>()
@@ -1081,7 +1081,7 @@ namespace PhoenixKineticistElements.ElementLight
                     x.m_CapResource = BlueprintTool.GetRef<BlueprintAbilityResourceReference>("IllusoryDuplicatesResource");
                     x.IsDefense = true;
                     //x.m_MythicKineticDefense = BlueprintTool.GetRef<BlueprintFeatureReference>("MythicKineticDefenses");
-                })*/
+                })
                 .Configure();
 
                     BuffConfigurator.New("IllusoryDuplicatesBuff", "4E958E74-4B24-42DF-B72C-6073BFEDAA73")

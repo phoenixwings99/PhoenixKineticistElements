@@ -75,7 +75,7 @@ namespace PhoenixKineticistElements.Overrides
 
                 for (int i = 1; i <= imagesCount; i++)
                 {
-                    
+
                     int target = lib.Images.Count == 0 ? 1 : lib.Images.Select(x => x.indexThingy).Max() + 1;
                     Main.Log.Log($"UnitPartMirrorImage.Init: adding image at val {target}");
                     __instance.VisualImages.Add(target);
@@ -99,7 +99,7 @@ namespace PhoenixKineticistElements.Overrides
         {
             try
             {
-                Main.Log.Log($"AddIllusoryDuplicate firing on UnitPartMirrorImage, buff is {(source != null ? source.Blueprint.NameSafe() : "null" )}");
+                Main.Log.Log($"AddIllusoryDuplicate firing on UnitPartMirrorImage, buff is {(source != null ? source.Blueprint.NameSafe() : "null")}");
                 Main.Log.Log($"AddIllusoryDuplicate firing on UnitPartMirrorImage, Owner is  {(mirrorImage.Owner != null ? mirrorImage.Owner.CharacterName : "null")}");
 
                 UnitPartMirrorImageMultisource lib = mirrorImage.Owner.Ensure<UnitPartMirrorImageMultisource>();
@@ -124,51 +124,35 @@ namespace PhoenixKineticistElements.Overrides
                 return -1;
             }
 
-                    
+
 
         }
-        public static void TestInit(this MirrorImageFX mirrorImageFX, UnitEntityView unit)
-        {
-                mirrorImageFX.Init(unit);
-        }
-
         
+
+
         public static void DeployImage(this MirrorImageFX mirrorImageFX, UnitEntityView unit, UnitPartMirrorImage unitPartMirrorImage, int slot)
         {
 
-           
+
             //Above lines setup UnitPart to FX relationship
 
-           
-            Dictionary<int, MirrorImageFX.MirrorImageEntry> dict = new();
-            for (int i = 1; i <= mirrorImageFX.m_Entries.Count; i++)
-            {
-                if (!unitPartMirrorImage.VisualImages.Contains(i))
-                {
-                    dict.Add(i, mirrorImageFX.m_Entries[i - 1]);
-                }
-            }
-            foreach (var imageIndex in dict)
-            {
-                if (dict.Count <= 0)
-                {
-                    break;
-                }
-                int index = UnityEngine.Random.Range(0, dict.Count - 1);
-                MirrorImageFX.MirrorImageEntry mirrorImageEntry = dict[index];//Selects a random part of the holder list from m_entries
-                mirrorImageEntry.ImageIndex = imageIndex.Key;
-                mirrorImageFX.m_ActiveEntries.Add(imageIndex.Value);
-                dict.Remove(index);
-                mirrorImageEntry.MainFxInstance = FxHelper.SpawnFxOnUnit(mirrorImageEntry.MainFxPrefab, unit, null, null, default(Vector3), FxPriority.Important);
-            }
-            
+
+
+
+
+            MirrorImageFX.MirrorImageEntry mirrorImageEntry = mirrorImageFX.m_Entries[slot];//Selects a random part of the holder list from m_entries
+            mirrorImageEntry.ImageIndex = slot;
+            mirrorImageFX.m_ActiveEntries.Add(mirrorImageEntry);
+            mirrorImageEntry.MainFxInstance = FxHelper.SpawnFxOnUnit(mirrorImageEntry.MainFxPrefab, unit, null, null, default(Vector3), FxPriority.Important);
+
+
         }
-        
+
 
         public static int ReactivateRenewableImage(this UnitPartMirrorImage mirrorimage, Buff source)
         {
             UnitPartMirrorImageMultisource lib = mirrorimage.Owner.Ensure<UnitPartMirrorImageMultisource>();
-            int target = lib.Images.First(x => (x.buff == source && x.active == false))?.indexThingy ?? -1 ;
+            int target = lib.Images.First(x => (x.buff == source && x.active == false))?.indexThingy ?? -1;
             if (target != -1)
             {
                 ReactivateRenewableImage(mirrorimage, source, target);
@@ -181,7 +165,7 @@ namespace PhoenixKineticistElements.Overrides
             UnitPartMirrorImageMultisource lib = mirrorImage.Owner.Ensure<UnitPartMirrorImageMultisource>();
             mirrorImage.VisualImages.Add(indexThingy);
             mirrorImage.MechanicsImages.Add(indexThingy);
-            lib.Images.FirstOrDefault(x=>x.indexThingy == indexThingy).active = true;
+            lib.Images.FirstOrDefault(x => x.indexThingy == indexThingy).active = true;
             if (mirrorImage.Fx != null)
             {
                 mirrorImage.Fx.Update2();
@@ -194,7 +178,7 @@ namespace PhoenixKineticistElements.Overrides
 
         }
 
-        
+
 
 
         [HarmonyPatch(typeof(UnitPartMirrorImage), nameof(UnitPartMirrorImage.TryAbsorbHit))]
@@ -247,7 +231,7 @@ namespace PhoenixKineticistElements.Overrides
                 return true;
             }
         }
-        
+
         public static void RemoveImagesFromSource(this UnitPartMirrorImage imagePart, Buff source)
         {
             imagePart.Owner.Ensure<UnitPartMirrorImageMultisource>().RemoveImagesFromSource(source);
@@ -286,7 +270,7 @@ namespace PhoenixKineticistElements.Overrides
                 Main.Log.Log($"MirrorImageFx.init called on {unit.name}, mirror image pointer {((__instance.m_MirrorImage is not null) ? "found" : "not found")}");
                 Main.Log.Log($"{__instance.m_Entries.Count} entries in MirrorImageFx.m_entries");
                 Main.Log.Log($"{__instance.m_ActiveEntries.Count} entries in MirrorImageFx.m_ActiveEntries");
-               
+
             }
         }
     }
