@@ -62,9 +62,16 @@ public static class Main {
                 // Example
                 // SuperAwesomeFeat.Configure()
                 Light.Configure();
+                BasicKinesis.MakeMain();
             } catch (Exception e) {
                 Log.Log(string.Concat("Failed to initialize.", e));
             }
         }
+    }
+
+    private static bool? DarkCodexInstalled;
+    public static bool IsDarkCodexInstalled()
+    {
+        return DarkCodexInstalled ??= UnityModManager.modEntries.Exists(x => x.Info.Id.Equals("DarkCodex"));
     }
 }

@@ -612,7 +612,29 @@ namespace PhoenixKineticistElements
             }
         }
 
+        public static FeatureConfigurator AddFireFocusPrerequisite(this FeatureConfigurator featureConfigurator)
+        {
+            return featureConfigurator.AddPrerequisiteFeaturesFromList(features: new() { "13bdf8d542811ac4ca228a53aa108145", "caa7edca64af1914d9e14785beb6a143", "56e2fc3abed8f2247a621ac37e75f303", "d4a2a75d01d1e77489ff692636a538bf" }, amount: 1);
+        }
 
+        public static FeatureConfigurator AddAirFocusPrerequisite(this FeatureConfigurator featureConfigurator)
+        {
+            return featureConfigurator.AddPrerequisiteFeaturesFromList(features: new() { "2bd0d44953a536f489082534c48f8e31", "93bd14dd916cfd1429c11ad66adf5e2b", "659c39542b728c04b83e969c834782a9", "651570c873e22b84f893f146ce2de502" }, amount: 1);
+        }
 
+        public static FeatureConfigurator AddWaterFocusPrerequisite(this FeatureConfigurator featureConfigurator)
+        {
+            return featureConfigurator.AddPrerequisiteFeaturesFromList(features: new() { "7ab8947ce2e19c44a9edcf5fd1466686", "5e839c743c6da6649a43cdeb70b6018f", "faa5f1233600d864fa998bc0afe351ab", "86eff374d040404438ad97fedd7218bc" }, amount: 1);
+        }
+
+        public static FeatureConfigurator AddEarthFocusPrerequisite(this FeatureConfigurator featureConfigurator)
+        {
+            return featureConfigurator.AddPrerequisiteFeaturesFromList(features: new() { "c6816ad80a3df9c4ea7d3b012b06bacd", "d2a93ab18fcff8c419b03a2c3d573606", "956b65effbf37e5419c13100ab4385a3", "c43d9c2d23e56fb428a4eb60da9ba1cb" }, amount: 1);
+        }
+
+        public static FeatureConfigurator AddLightFocusPrerequisite(this    FeatureConfigurator featureConfigurator)
+        {
+            return featureConfigurator.AddPrerequisiteFeaturesFromList(features: new() { "ElementalFocusLight", "KineticKnightElementalFocusLight", "SecondaryElementLight", "ThirdElementLight" }, amount: 1);
+        }
     }
 }

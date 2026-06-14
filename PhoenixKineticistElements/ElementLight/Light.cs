@@ -374,6 +374,8 @@ namespace PhoenixKineticistElements.ElementLight
                 .AddToLevelEntry(15, "LightBlastProgression")
                 .Configure();
 
+            
+
             ProgressionConfigurator.For("SecondaryElementLight").AddPrerequisiteNoFeature("ThirdElementLight").Configure();
             ProgressionConfigurator.For("ThirdElementLight").AddPrerequisiteNoFeature("SecondaryElementLight").Configure();
             FeatureSelectionConfigurator.For("4204bc10b3d5db440b1f52f0c375848b").AddToAllFeatures("SecondaryElementLight").Configure();

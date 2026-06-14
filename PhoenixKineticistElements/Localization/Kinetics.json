@@ -84,10 +84,129 @@
     "enGB": "Element(s) light and water; Type composite blast (Sp); Level --; Burn 2; Aura conjuration (creation) [cold, water]\nPrerequisite(s) water blast, light blast\nBlast Type physical; Damage bludgeoning\nYou reflect your light off misty water vapors to create a glorious rainbow to batter a foe.  "
   },
   {
-    "Key": "RainbowineticBlade.Name",
+    "Key": "RainbowKineticBlade.Name",
     "enGB": "Rainbow Blast — Kinetic Blade"
-  }
+  },
+  {
+    "Key": "BasicKinesisFeatureSelection.Desc",
+    "enGB": "Basic Kinesis"
+  },
+  {
+    "Key": "BasicKinesisFeatureSelection.Name",
+    "enGB": "A kineticist gains the basic utility of any element she selects as a bonus wild talent, or any valid replacement talent."
+  },
 
+  {
+
+    "Key": "BasicAerokinesis",
+    "ProcessTemplates": false,
+    "enGB": "Basic Aerokinesis"
+  },
+  {
+
+    "Key": "BasicAerokinesis.Desc",
+    "enGB": "You can create a light breeze that blows against a creature or object from a direction of your choice that follows the target wherever it goes. The breeze grants the subject a +2 bonus on saves against very hot conditions, severe heat, breath weapons, and cloud vapors and gases (such as cloudkill, stinking cloud, and inhaled poisons).  You can have only one such breeze active at any one time."
+  },
+
+  {
+
+    "Key": "BasicElectrokinesis",
+    "ProcessTemplates": false,
+    "enGB": "Basic Electrokinesis"
+  },
+  {
+
+    "Key": "BasicElectrokinesis.Desc",
+    "enGB": "Unlike the typical aerokineticist, you focus much more on your control over electricity. You receive a competence bonus equal to 3 + 1/2 your kineticist level on Disable Device checks against technological objects, and a circumstance bonus on damage rolls equal to 1 + 1/5 your kineticist level on your electric blast, thunderstorm blast, and any composite blast for which electric blast or thunderstorm blast is a prerequisite when using them against creatures of the aquatic or water subtypes or creatures equipped with metal armor or holding metal objects. You cannot learn basic aerokinesis without possessing air blast, and if you possess basic aerokinesis at the time you gain this wild talent, you lose it and any wild talents for which basic aerokinesis is a prerequisite. You also cannot learn air blast unless you already possess electric blast, and if you already possess air blast when you gain this wild talent, it is replaced by electric blast (this could affect which composite blasts you have access to).\n You can select this talent in place of basic aerokinesis."
+  },
+
+  {
+
+    "Key": "BasicGeokinesis",
+    "ProcessTemplates": false,
+    "enGB": "Basic Geokinesis"
+  },
+
+  {
+
+    "Key": "BasicGeokinesis.Desc",
+    "enGB": "You have an increased search radius and gain 1/4 your kineticist level (minimum 1) to Perception to detect traps and secrets in rocky terrain.\n TT: You can move up to 5 pounds per kineticist level of rocks, loose earth, sand, clay, and other similar materials up to 15 feet as a move action. You can search earthen and stone areas from a distance as if using the sift cantrip."
+  },
+
+  {
+
+    "Key": "BasicHydrokinesis",
+    "ProcessTemplates": false,
+    "enGB": "Basic Hydrokinesis"
+  },
+
+  {
+
+    "Key": "BasicHydrokinesis.Desc",
+    "enGB": "Currently no in-game effect: \nTT: You can create water as the cantrip create water, purify water as if using purify food and drink, and dry wet creatures and objects as if using prestidigitation. While you cannot lift water into the air using this ability, you can create mild currents in a body of water by concentrating. These currents are strong enough to run a water mill as if the mill were being turned manually by a creature with a Strength score equal to your Constitution score."
+  },
+  {
+
+    "Key": "BasicCryokinesis",
+    "ProcessTemplates": false,
+    "enGB": "Basic Cryokinesis"
+  },
+
+  {
+
+    "Key": "BasicCryokinesis.Desc",
+    "enGB": "You focus more strongly on your ability to manipulate ice and snow than water in its liquid state. You receive a bonus to your natural armor equal to 1 + ⅕ your kineticist level and can use create water at will, but it instead conjures an equivalent amount of ice. You also receive a circumstance bonus on damage rolls equal to 1 + ⅕ your kineticist level on your cold blast, ice blast, and any composite blast for which cold blast or ice blast is a prerequisite when using them against creatures of the fire subtype and when used in cold temperatures and frigid environments. You cannot learn basic hydrokinesis without possessing water blast, and if you possess basic hydrokinesis at the time you gain this wild talent, you lose it and any wild talents for which basic hydrokinesis is a prerequisite. You also cannot learn water blast unless you already possess cold blast, and if you already possess water blast when you gain this wild talent, it is replaced by cold blast (this could also affect which composite blasts you have access to).\n You can select this talent in place of basic hydrokinesis."
+  },
+  {
+
+    "Key": "BasicTelekinesis",
+    "ProcessTemplates": false,
+    "enGB": "Basic Telekinesis"
+  },
+
+  {
+
+    "Key": "BasicTelekinesis.Desc",
+    "enGB": "Currently no in-game effect: \nTT: This ability is similar to mage hand, except you can move an object that weighs up to 5 pounds per 2 kineticist levels you possess (minimum 5 pounds), and you can move magical objects. Additionally, you can create a container of entwined strands of aether in order to hold liquids or piles of small objects of the same weight. You can dip the container to pick up or drop a liquid as a move action. If you possess the extended range wild talent, you can increase the range of basic telekinesis to medium range and increase the rate of movement to 30 feet per round, and if you possess the extreme range wild talent, You can increase the range of basic telekinesis to long range and increase the rate of movement to 60 feet per round. You can also use your basic telekinesis to duplicate the effects of the open/close cantrip.\nYou can open or close (your choice) a door, chest, box, window, bag, pouch, bottle, barrel, or other container. If anything resists this activity (such as a bar on a door or a lock on a chest), the spell fails. In addition, the spell can only open and close things weighing 30 pounds or less. Thus, doors, chests, and similar objects sized for enormous creatures may be beyond this spell’s ability to affect."
+  },
+
+  {
+
+    "Key": "BasicPhytokinesis",
+    "ProcessTemplates": false,
+    "enGB": "Basic Cryokinesis"
+  },
+
+  {
+
+    "Key": "BasicPhytokinesis.Desc",
+    "enGB": "You have an increased search radius and gain 1/4 your kineticist level (minimum 1) to Perception to detect traps and secrets in verdant terrain. \nTT: You can prune and otherwise tend plants within 30 feet without using gardening tools. You can search wooded areas and other plant-heavy areas from a distance as if using the sift cantrip. By concentrating, you can detect plants within 120 feet as if using detect animals or plants."
+  },
+  {
+
+    "Key": "BasicChaoskinesis",
+    "ProcessTemplates": false,
+    "enGB": "Basic Chaoskinesis"
+  },
+
+  {
+
+    "Key": "BasicChaoskinesis.Desc",
+    "enGB": "You can grant one creature protection from light sensitivity, or grant one creature +4 to jump and +50% carrying capacity. \nTT: You can create a shadow that protects a target from bright light. You can also change gravity to increase a creature’s carrying capacity by half or grant a creature a +4 bonus on Acrobatics checks to jump.\nEach benefit lasts 1 hour or until you use basic chaokinesis again."
+  },
+  {
+
+    "Key": "BasicPhotokinesis",
+    "ProcessTemplates": false,
+    "enGB": "Basic Photokinesis"
+  },
+
+  {
+
+    "Key": "BasicPhotokinesis.Desc",
+    "enGB": "Currently no in-game effect. \nTT: You can create up to 3 different points of light, as per the light cantrip, as well as altering the perceived color of an object up to 5 lbs. for 1 minute."
+
+  }
 
 
 
