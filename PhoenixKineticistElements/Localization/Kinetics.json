@@ -25,7 +25,7 @@
   },
   {
     "Key": "LightClassSkills.Desc",
-    "enGB": "A photokineticist adds Knowledge (nature) and Stealth to their list of class skills."
+    "enGB": "A photokineticist adds Knowledge (nature) to their list of class skills."
   },
   {
     "Key": "IllusoryDuplicates.Name",
@@ -33,7 +33,7 @@
   },
   {
     "Key": "IllusoryDuplicates.Desc",
-    "enGB": "Element(s) light; Type defense (Sp); Level --; Burn 0\nYou are capable of shaping the light to your whims, creating an illusory duplicate of yourself in your square as per the mirror image spell. A destroyed illusory duplicate will reform at the rate of 1 per 5 minutes. You can accept 1 point of burn to create another illusory duplicate that will reform at the same rate until your burn is removed. At 4th level and every 4 levels thereafter, you may accept 1 additional point of burn to create an additional illusory duplicate, up to a maximum of 6 at 20th level.\nWhenever you accept a point of burn using a light wild talent, you can reform 1 illusory duplicate. You can dismiss or restore this effect as an immediate action. ."
+    "enGB": "Element(s) light; Type defense (Sp); Level --; Burn 0\nYou are capable of shaping the light to your whims, creating an illusory duplicate of yourself in your square as per the mirror image spell. A destroyed illusory duplicate will reform in 5 minutes. You can accept 1 point of burn to create another illusory duplicate that will reform at the same rate until your burn is removed. At 4th level and every 4 levels thereafter, you may accept 1 additional point of burn to create an additional illusory duplicate, up to a maximum of 6 at 20th level.\nWhenever you accept a point of burn using a light wild talent, you can reform 1 illusory duplicate. You can dismiss or restore this effect as an immediate action. ."
   },
   {
     "Key": "LightKineticBlade.Name",

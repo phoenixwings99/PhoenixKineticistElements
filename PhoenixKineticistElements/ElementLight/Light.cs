@@ -23,6 +23,7 @@ using Kingmaker.Blueprints.Items.Ecnchantments;
 using Kingmaker.Blueprints.Items.Weapons;
 using Kingmaker.Designers.EventConditionActionSystem.Evaluators;
 using Kingmaker.ElementsSystem;
+using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Enums;
 using Kingmaker.RuleSystem.Rules.Damage;
 using Kingmaker.UI.MVVM._ConsoleView.InGame;
@@ -102,7 +103,7 @@ namespace PhoenixKineticistElements.ElementLight
                 DefaultIcon = baseIcon,
                 DefaultIconMelee = baseIconMelee,
                 FeatureGuid = "A06EC6C0-92DB-4E40-B438-2932CB138CD7",
-                damageType = new[] { BPSDamage() },
+                damageType = new[] { ElementFactories.BPSDamage() },
                 ProjectileGuid = "2511627d593387d4d89004bec111ba31", //Searing Light
                 weaponfx = holyeffect
 
@@ -116,7 +117,7 @@ namespace PhoenixKineticistElements.ElementLight
                 DefaultIcon = baseIcon,
                 DefaultIconMelee = baseIconMelee,
                 FeatureGuid = "D8E0DE4B-66AC-44D0-B1B6-68A611F9DCF9",
-                damageType = new[] { BDamage(), ColdDamage() },
+                damageType = new[] { ElementFactories.BDamage(), ElementFactories.ColdDamage() },
                 ProjectileGuid = "5769363a427374f428490092c57820a7", //Prismatic spray
                 weaponfx = holyeffect,
                 spellDescriptors = SpellDescriptor.Cold,
@@ -132,7 +133,7 @@ namespace PhoenixKineticistElements.ElementLight
                 DefaultIcon = baseIcon,
                 DefaultIconMelee = baseIconMelee,
                 FeatureGuid = "519F7A00-9C7C-4FBC-BA0E-C50CA4B29B1B",
-                damageType = new[] { BSDamage() },
+                damageType = new[] { ElementFactories.BSDamage() },
                 ProjectileGuid = "c4b0d8b4786a1244d9fbc4b424931b83",
                 weaponfx = holyeffect,
                 Burn = 2
@@ -147,7 +148,7 @@ namespace PhoenixKineticistElements.ElementLight
                 DefaultIcon = baseIcon,
                 DefaultIconMelee = baseIconMelee,
                 FeatureGuid = "948BD692-A37A-4CB6-A129-0BBDBF2B2F9F",
-                damageType = new[] { BSDamage() },
+                damageType = new[] { ElementFactories.BSDamage() },
                 ProjectileGuid = "c4b0d8b4786a1244d9fbc4b424931b83",
                 weaponfx = holyeffect,
                 Burn = 2
@@ -162,7 +163,7 @@ namespace PhoenixKineticistElements.ElementLight
                 DefaultIcon = baseIcon,
                 DefaultIconMelee = baseIconMelee,
                 FeatureGuid = "56FF6626-A7B1-465B-9F16-E6F146DD2A23",
-                damageType = new[] { BDamage() },
+                damageType = new[] { ElementFactories.BDamage() },
                 ProjectileGuid = "c4b0d8b4786a1244d9fbc4b424931b83",
                 weaponfx = holyeffect,
                 Burn = 2
@@ -177,7 +178,7 @@ namespace PhoenixKineticistElements.ElementLight
                 DefaultIcon = baseIcon,
                 DefaultIconMelee = baseIconMelee,
                 FeatureGuid = "6732B69D-44CB-41D7-B500-1D4F513641AD",
-                damageType = new[] { BDamage() },
+                damageType = new[] { ElementFactories.BDamage() },
                 ProjectileGuid = "54a9377a7b01f7d44a56e7713f939db6", //Azata Rainbow Arrows
                 weaponfx = holyeffect,
                 Burn = 2
@@ -185,13 +186,13 @@ namespace PhoenixKineticistElements.ElementLight
             };
 
 
-            ConfigureBlast(LightBlast);
+            ConfigureXBlast(LightBlast);
 
-            ConfigureBlast(AuroraBlast);
+            ConfigureXBlast(AuroraBlast);
 
-            ConfigureBlast(RainbowBlast);
+            ConfigureXBlast(RainbowBlast);
 
-            ConfigureBlast(GloriousBlast);
+            ConfigureXBlast(GloriousBlast);
 
 
 
@@ -206,20 +207,22 @@ namespace PhoenixKineticistElements.ElementLight
             FeatureSelectionConfigurator.For("1f3a15a3ae8a5524ab8b97f469bf4e3d").AddToAllFeatures("ElementalFocusLight").Configure();
 
             //Dazzling Infusion
-            AddToSubstanceInfusion(LightBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
-            AddToSubstanceInfusion(GloriousBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
-            AddToSubstanceInfusion(RainbowBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
-            AddToSubstanceInfusion(AuroraBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
+            ElementFactories.AddToSubstanceInfusion(LightBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
+            ElementFactories.AddToSubstanceInfusion(GloriousBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
+            ElementFactories.AddToSubstanceInfusion(RainbowBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
+            ElementFactories.AddToSubstanceInfusion(AuroraBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
 
             //Flash Infusion
 
-            AddToSubstanceInfusion(LightBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
-            AddToSubstanceInfusion(GloriousBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
-            AddToSubstanceInfusion(RainbowBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
-            AddToSubstanceInfusion(AuroraBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
+            ElementFactories.AddToSubstanceInfusion(LightBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
+            ElementFactories.AddToSubstanceInfusion(GloriousBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
+            ElementFactories.AddToSubstanceInfusion(RainbowBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
+            ElementFactories.AddToSubstanceInfusion(AuroraBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
+
+            MakeSkilledKineticistXBuff("Light", StatType.SkillLoreNature);
         }
 
-        private static void ConfigureBlast(BlastElement element)
+        private static void ConfigureXBlast(BlastElement element)
         {
 
             var genericBlastFeature = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XBlastFeature");
@@ -280,27 +283,29 @@ namespace PhoenixKineticistElements.ElementLight
 
 
 
-            CreateXBlastFeature(element);
+            ElementFactories.CreateXBlastFeature(element);
 
-            CreateXBlastBaseAbility(element);
+            ElementFactories.CreateXBlastBaseAbility(element);
 
-            CreateXBlastVariant_Base(element);
+            ElementFactories.CreateXBlastVariant_Base(element);
 
-            CreateXBlastVariant_ExtendedRange(element);
+            ElementFactories.CreateXBlastVariant_ExtendedRange(element);
 
-            CreateXKineticBladeFeature(element);
+            ElementFactories.CreateXKineticBladeFeature(element);
 
-            CreateKineticBladeXBlastAbility(element);
+            ElementFactories.CreateKineticBladeXBlastAbility(element);
 
-            CreateKineticBladeXBuffAbility(element);
+            ElementFactories.CreateKineticBladeXBuffAbility(element);
 
-            MakeXKineticBladeWeapon(element);
+            ElementFactories.MakeXKineticBladeWeapon(element);
 
-            MakeKineticBladeXBlastBurnAbility(element);
+            ElementFactories.MakeKineticBladeXBlastBurnAbility(element);
 
-            CreateXBlastBladeDamage(element);
+            ElementFactories.CreateXBlastBladeDamage(element);
 
-            XKineticBladeEnchantment(element);
+            ElementFactories.XKineticBladeEnchantment(element);
+
+           
 
             AbilityConfigurator.For("80f10dc9181a0f64f97a9f7ac9f47d65").EditComponent<AbilityCasterHasFacts>(x =>
             {
@@ -381,47 +386,19 @@ namespace PhoenixKineticistElements.ElementLight
             return FeatureConfigurator.New("LightClassSkills", "2AE1D4977B294F9084FA42B5F8190D7F")
                 .SetDisplayName("LightClassSkills.Name").SetDescription("LightClassSkills.Desc")
                 .AddClassSkill(Kingmaker.EntitySystem.Stats.StatType.SkillLoreNature)
-                .AddClassSkill(Kingmaker.EntitySystem.Stats.StatType.SkillStealth)
 
                 .Configure();
 
         }
         #endregion
 
-        private static void AddToSubstanceInfusion(BlastElement blastElement, string featureID, string buffID)
-        {
-            FeatureConfigurator.For(featureID).EditComponent<PrerequisiteFeaturesFromList>(x =>
-            {
-                x.m_Features = x.m_Features.AddItem(BlueprintTool.GetRef<BlueprintFeatureReference>($"{blastElement.Name}BlastFeature")).ToArray();
-            }).Configure();
-
-            BuffConfigurator.For(buffID).EditComponent<AddKineticistInfusionDamageTrigger>(x =>
-            {
-                x.m_AbilityList = x.m_AbilityList.AddItem(BlueprintTool.GetRef<BlueprintAbilityReference>($"{blastElement.Name}BlastBase")).ToArray();
-
-            }).EditComponent<AddKineticistBurnModifier>(x =>
-            {
-                x.m_AppliableTo = x.m_AppliableTo.AddItem(BlueprintTool.GetRef<BlueprintAbilityReference>($"{blastElement.Name}BlastBase")).ToArray();
-
-            }).Configure();
-        }
+        
 
         #region blast backed
 
        
 
-        private static void CreateXBlastFeature(BlastElement element)
-        {
-            FeatureConfigurator.For($"{element.Name}BlastFeature")
-                .AddFacts(facts: ["cb30a291c75def84090430fbf2b5c05e"])//Composite blast buff
-                .AddFeatureIfHasFact($"{element.Name}BlastBase", feature: $"{element.Name}BlastBase", not: true)
-                .AddToGroups(FeatureGroup.KineticBlast)
-                .SetIcon(baseIcon)
-                .SetRanks(20)
-                .SetIsClassFeature(true)
-                .Configure();
-        }
-
+        
 
         private static void CreateLightBlastProgression()
         {
@@ -448,436 +425,18 @@ namespace PhoenixKineticistElements.ElementLight
 
         #region Light Blast
 
-        private static void CreateXBlastBaseAbility(BlastElement element)
-        {
-            AbilityConfigurator.For($"{element.Name}BlastBase")
-                .AddAbilityVariants([$"{element.Name}BlastAbility", $"ExtendedRange{element.Name}BlastAbility"])
-                .AddAbilityShowIfCasterHasFact(unitFact: "1f3a15a3ae8a5524ab8b97f469bf4e3d")//Focus Selection
-                .AddAbilityKineticist(amount: 1)
-                .AddSpellDescriptorComponent(element.spellDescriptors)
-                .SetIcon(element.DefaultIcon)
-                .SetType(AbilityType.Special)
-                .SetRange(AbilityRange.Close)
-                .SetCanTargetPoint(true)
-                .SetCanTargetFriends(true)
-                .SetCanTargetSelf(true)
-                .SetCanTargetEnemies(true)
-                .SetSpellResistance(true)
-                .SetAnimation(UnitAnimationActionCastSpell.CastAnimationStyle.Omni)
-                .SetActionType(Kingmaker.UnitLogic.Commands.Base.UnitCommand.CommandType.Standard)
-                .SetAvailableMetamagic(Metamagic.Empower, Metamagic.Maximize, Metamagic.Quicken, Metamagic.Extend, Metamagic.Heighten, Metamagic.Reach)
-                .Configure();
+        
 
-        }
+      
+        
 
 
-
-        private static void CreateXBlastVariant_Base(BlastElement element)
-        {
-            var blast = AbilityConfigurator.For($"{element.Name}BlastAbility")
-                .SetRange(AbilityRange.Close)
-                .SetParent($"{element.Name}BlastBase")
-                .ApplyShotProperties(element, 0)
-                .Configure();
-        }
-
-        private static void CreateXBlastVariant_ExtendedRange(BlastElement element)
-        {
-            var blast = AbilityConfigurator.For($"ExtendedRange{element.Name}BlastAbility")
-                .AddAbilityShowIfCasterHasFact(unitFact: "cb2d9e6355dd33940b2bef49e544b0bf")
-                .SetRange(AbilityRange.Long)
-                .SetParent($"{element.Name}BlastBase")
-                .ApplyShotProperties(element, 1)
-                .Configure();
-        }
-
-        private static AbilityKineticist.DamageInfo[] GetTeasers(BlastElement element)
-        {
-            if (element.damageType.Length == 2)
-            {
-                return new[] { new Kingmaker.UnitLogic.Class.Kineticist.AbilityKineticist.DamageInfo()
-                {
-                    Value = new()
-                    {
-                        DiceType = Kingmaker.RuleSystem.DiceType.D6,
-                        DiceCountValue = new ContextValue()
-                        {
-                            ValueType = ContextValueType.Rank,
-                            ValueRank = Kingmaker.Enums.AbilityRankType.DamageDice
-                        },
-                        BonusValue = new ContextValue()
-                        {
-                            ValueType = ContextValueType.Shared,
-                        },
-
-
-
-                    },
-                    Half = true,
-                    Type = element.damageType[0],
-                    UseWeaponDamageModifiers = true
-
-                },
-                new Kingmaker.UnitLogic.Class.Kineticist.AbilityKineticist.DamageInfo()
-                {
-                    Value = new()
-                    {
-                        DiceType = Kingmaker.RuleSystem.DiceType.D6,
-                        DiceCountValue = new ContextValue()
-                        {
-                            ValueType = ContextValueType.Rank,
-                            ValueRank = Kingmaker.Enums.AbilityRankType.DamageDice
-                        },
-                        BonusValue = new ContextValue()
-                        {
-                            ValueType = ContextValueType.Shared,
-                        },
-
-
-
-                    },
-                    Half = true,
-                    Type = element.damageType[1],
-                    UseWeaponDamageModifiers = true
-                }
-            };
-
-
-
-            }
-            else
-            {
-                return new[] {
-                    new Kingmaker.UnitLogic.Class.Kineticist.AbilityKineticist.DamageInfo()
-                    {
-                        Value = new()
-                        {
-                            DiceType = Kingmaker.RuleSystem.DiceType.D6,
-                            DiceCountValue = new ContextValue()
-                            {
-                                ValueType = ContextValueType.Rank,
-                                ValueRank = Kingmaker.Enums.AbilityRankType.DamageDice
-                            },
-                            BonusValue = new ContextValue()
-                            {
-                                ValueType = ContextValueType.Shared,
-                            },
-
-
-
-                        },
-
-                        Type = element.damageType[0],
-                        UseWeaponDamageModifiers = true
-
-                    }
-                };
-            }
-        }
-
-
-        private static AbilityConfigurator ApplyShotProperties(this AbilityConfigurator abilityConfigurator, BlastElement element, int shotcost)
-        {
-            ContextDiceValue damageDiceValue = element.Composite ? (element.Physical ? PhysicalCompositeBlastDice() : EnergyCompositeBlastDice()) : element.Physical ? PhysicalSimpleBlastDice() : EnergySimpleBlastDice();
-
-
-            return abilityConfigurator.SetIcon(baseIcon)
-                 .AddSpellDescriptorComponent(element.spellDescriptors)
-                .SetType(AbilityType.Special)
-                .SetActionType(Kingmaker.UnitLogic.Commands.Base.UnitCommand.CommandType.Standard)
-                .SetAvailableMetamagic(availableMetamagic: new[] { Metamagic.Empower, Metamagic.Maximize, Metamagic.Quicken,
-                    Metamagic.Heighten})
-                .SetCanTargetEnemies(true)
-                .SetIcon(element.DefaultIcon)
-                .SetAnimation(UnitAnimationActionCastSpell.CastAnimationStyle.Kineticist)
-                 .AddContextRankConfig(KineticBlastFeatureCountConfig())
-                .AddContextRankConfig(KinStatProperty(!element.Physical))
-                .AddKBRicochet(element.ProjectileGuid)
-                .AddAbilityDeliverProjectile(
-                    projectiles: [element.ProjectileGuid],
-                    needAttackRoll: true,
-                    weapon: element.Physical ? "65951e1195848844b8ab8f46d942f6e8" : "4d3265a5b9302ee4cab9c07adddb253f")
-
-                .AddAbilityKineticist(amount: 1,
-                    blastBurnCost: element.Burn,
-                    infusionBurnCost: shotcost,
-                    cachedDamageInfo: GetTeasers(element).ToList()
-                    )
-                .AddAbilityEffectRunAction(BuildChainableDamageAction(element))
-                .AddContextCalculateSharedValue(modifier: 1.0, value: new ContextDiceValue()
-                {
-                    DiceType = Kingmaker.RuleSystem.DiceType.One,
-                    DiceCountValue = new()
-                    {
-                        ValueType = ContextValueType.Rank,
-                        ValueRank = Kingmaker.Enums.AbilityRankType.DamageDice,
-                        ValueShared = AbilitySharedValue.Damage,
-                    },
-                    BonusValue = new()
-                    {
-                        ValueType = ContextValueType.Rank,
-                        ValueRank = Kingmaker.Enums.AbilityRankType.DamageBonus,
-                        ValueShared = AbilitySharedValue.Damage
-                    },
-                }, valueType: AbilitySharedValue.Damage)
-
-                .AddAbilitySpawnFx(anchor: Kingmaker.UnitLogic.Abilities.Components.Base.AbilitySpawnFxAnchor.Caster,
-                    time: Kingmaker.UnitLogic.Abilities.Components.Base.AbilitySpawnFxTime.OnPrecastStart,
-                    orientationMode: Kingmaker.UnitLogic.Abilities.Components.Base.AbilitySpawnFxOrientation.Copy,
-                    prefabLink: "69a83b56c1265464f8626a2ab414364a"
-                )
-                .AddAbilitySpawnFx(anchor: Kingmaker.UnitLogic.Abilities.Components.Base.AbilitySpawnFxAnchor.Caster,
-                    time: Kingmaker.UnitLogic.Abilities.Components.Base.AbilitySpawnFxTime.OnStart,
-                    orientationMode: Kingmaker.UnitLogic.Abilities.Components.Base.AbilitySpawnFxOrientation.Copy,
-                    prefabLink: "852b687aad7863e438c61339dd35d85d"
-                )
-                ;
-
-        }
-
-
-
-
-        private static void CreateKineticBladeXBlastAbility(BlastElement element)
-        {
-            ActivatableAbilityConfigurator.For($"KineticBlade{element.Name}BlastAbility")
-                .AddRestrictionCanUseKineticBlade()
-                .SetDescription(kinBlade.m_Description)
-                .SetGroup(Kingmaker.UnitLogic.ActivatableAbilities.ActivatableAbilityGroup.FormInfusion)
-                .SetIcon(element.DefaultIconMelee)
-                .SetDeactivateImmediately(true)
-                .SetDeactivateIfOwnerUnconscious(true)
-                .SetActivationType(Kingmaker.UnitLogic.ActivatableAbilities.AbilityActivationType.Immediately)
-                .SetActivateWithUnitCommand(Kingmaker.UnitLogic.Commands.Base.UnitCommand.CommandType.Free)
-                .SetActivateOnUnitAction(Kingmaker.UnitLogic.ActivatableAbilities.AbilityActivateOnUnitActionType.Attack)
-                .SetBuff($"KineticBlade{element.Name}BlastBuff")
-                .Configure();
-        }
-
-        private static void CreateKineticBladeXBuffAbility(BlastElement element)
-        {
-            BuffConfigurator.For($"KineticBlade{element.Name}BlastBuff")
-                 .AddSpellDescriptorComponent(element.spellDescriptors)
-                .AddKineticistBlade(blade: $"{element.Name}KineticBladeWeapon")
-                .SetFlags(BlueprintBuff.Flags.HiddenInUi, BlueprintBuff.Flags.StayOnDeath)
-                .SetIsClassFeature(true)
-                .Configure();
-        }
-
-        private static void MakeXKineticBladeWeapon(BlastElement element)
-        {
-            ItemWeaponConfigurator.For($"{element.Name}KineticBladeWeapon")
-                .AddWeaponKineticBlade(activationAbility: $"KineticBlade{element.Name}BlastBurnAbility", blast: $"{element.Name}BlastBladeDamage")
-                .SetIcon(KinBladeInventoryIcon)
-                .SetForceStackable(false)
-                .SetDestructible(false)
-                .SetVisualParameters(new WeaponVisualParameters()
-                {
-                    m_WeaponAnimationStyle = Kingmaker.View.Animation.WeaponAnimationStyle.SlashingOneHanded,
-                    m_WeaponModel = new Kingmaker.ResourceLinks.PrefabLink() { AssetId = "7c05296dbc70bf6479e66df7d9719d1e" },
-                    m_WeaponSheathModelOverride = new Kingmaker.ResourceLinks.PrefabLink() { AssetId = "f777a23c850d099428c33807f83cd3d6" }
-
-
-                })
-                .SetType("b05a206f6c1133a469b2f7e30dc970ef")
-                .SetEnchantments($"{element.Name}KineticBladeEnchantment")
-                .SetOverrideDamageDice(true)
-                .Configure();
-
-        }
-
-        private static void MakeKineticBladeXBlastBurnAbility(BlastElement element)
-        {
-            AbilityConfigurator.For($"KineticBlade{element.Name}BlastBurnAbility")
-                .AddAbilityKineticist(amount: 1, infusionBurnCost: 1, blastBurnCost: element.Burn)
-                .AddAbilityEffectRunAction(ActionsBuilder.New().ApplyBuff(buff: kinBladeBuff, durationValue: new()
-                {
-                    Rate = DurationRate.Rounds,
-                    BonusValue = new()
-                    {
-                        Value = 2
-                    }
-                }))
-                .AddAbilityKineticBlade()
-                 .AddSpellDescriptorComponent(element.spellDescriptors)
-                .SetType(AbilityType.Special)
-                .SetRange(AbilityRange.Personal)
-                .SetCanTargetSelf(true)
-                .SetShouldTurnToTarget(true)
-                .SetAnimation(UnitAnimationActionCastSpell.CastAnimationStyle.Omni)
-                .SetActionType(Kingmaker.UnitLogic.Commands.Base.UnitCommand.CommandType.Free)
-                .SetHidden(true)
-                .SetAvailableMetamagic(Metamagic.Extend, Metamagic.Heighten)
-                .Configure();
-
-        }
-
-        private static void CreateXBlastBladeDamage(BlastElement element)
-        {
-            ContextDiceValue damageDiceValue = element.Composite ? (element.Physical ? PhysicalCompositeBlastDice() : EnergyCompositeBlastDice()) : element.Physical ? PhysicalSimpleBlastDice() : EnergySimpleBlastDice();
-
-            AbilityConfigurator.For($"{element.Name}BlastBladeDamage")
-                 .AddSpellDescriptorComponent(element.spellDescriptors)
-                .SetDisplayName($"{element.Name}KineticBlade.Name")
-                .AddAbilityEffectRunAction(BuildChainableDamageAction(element))
-                .AddAbilityShowIfCasterHasFact(unitFact: "4d39ccef7b5b2e9458e8599eae3c3be0", not: false)
-                .AddAbilityDeliveredByWeapon()
-                .AddContextCalculateSharedValue(modifier: 1.0, value: new ContextDiceValue()
-                {
-                    DiceType = Kingmaker.RuleSystem.DiceType.One,
-                    DiceCountValue = new()
-                    {
-                        ValueType = ContextValueType.Rank,
-                        ValueRank = Kingmaker.Enums.AbilityRankType.DamageDice,
-                        ValueShared = AbilitySharedValue.Damage,
-                    },
-                    BonusValue = new()
-                    {
-                        ValueType = ContextValueType.Rank,
-                        ValueRank = Kingmaker.Enums.AbilityRankType.DamageBonus,
-                        ValueShared = AbilitySharedValue.Damage
-                    },
-                }, valueType: AbilitySharedValue.Damage)
-                .AddContextRankConfig(KinStatProperty(!element.Physical))
-                .AddAbilityKineticist(amount: 1, blastBurnCost: element.Burn,
-                    cachedDamageInfo: GetTeasers(element).ToList())
-                .AddContextRankConfig(KineticBlastFeatureCountConfig())
-                .AddContextCalculateAbilityParamsBasedOnClass(characterClass: "42a455d9ec1ad924d889272429eb8391", statType: Kingmaker.EntitySystem.Stats.StatType.Dexterity)
-                .SetParent($"{element.Name}BlastBase")
-                .AddKBRicochet(element.ProjectileGuid)
-                .AddAbilityDeliverProjectile(projectiles: [element.ProjectileGuid],
-                    needAttackRoll: true,
-                    weapon: element.Physical ? "65951e1195848844b8ab8f46d942f6e8" : "4d3265a5b9302ee4cab9c07adddb253f")
-                .SetType(AbilityType.Special)
-                .SetCanTargetEnemies(true)
-                .SetShouldTurnToTarget(true)
-                .SetSpellResistance(!element.Physical)
-                .SetAnimation(UnitAnimationActionCastSpell.CastAnimationStyle.Kineticist)
-                .SetTargetMapObjects(true)
-                .AddToAvailableMetamagic(Metamagic.Empower, Metamagic.Maximize, Metamagic.Quicken, Metamagic.Heighten, Metamagic.Reach)
-                .Configure();
-                
-        }
-
-        private static void XKineticBladeEnchantment(BlastElement element)
-        {
-            WeaponEnchantmentConfigurator.For($"{element.Name}KineticBladeEnchantment")
-                .AddContextCalculateSharedValue(modifier: 1.0, value: new ContextDiceValue()
-                {
-                    DiceType = Kingmaker.RuleSystem.DiceType.Zero,
-                    DiceCountValue = new ContextValue()
-                    {
-                        ValueType = ContextValueType.Simple,
-                        Value = 0,
-                        ValueRank = AbilityRankType.DamageDice,
-                        ValueShared = AbilitySharedValue.Damage
-
-                    },
-                    BonusValue = new()
-                    {
-                        ValueType = ContextValueType.Rank,
-                        ValueRank = AbilityRankType.DamageDice,
-                        ValueShared = AbilitySharedValue.Damage
-                    }
-                })
-                .AddContextRankConfig(KineticBlastFeatureCountConfig())
-                .AddContextRankConfig(KinStatProperty(!element.Physical))
-                .SetWeaponFxPrefab(element.weaponfx)
-                .Configure();
-
-
-        }
-
-        private static void CreateXKineticBladeFeature(BlastElement element)
-        {
-            FeatureConfigurator.For($"{element.Name}KineticBladeFeature")
-                .AddFeatureIfHasFact(checkedFact: $"KineticBlade{element.Name}BlastAbility", feature: $"KineticBlade{element.Name}BlastAbility", not: true)
-                .AddFeatureIfHasFact(checkedFact: $"KineticBlade{element.Name}BlastBurnAbility", feature: $"KineticBlade{element.Name}BlastBurnAbility", not: true)
-                .SetHideInUI(true)
-                .SetHideInCharacterSheetAndLevelUp(true)
-                .SetIsClassFeature(true)
-                .Configure();
-
-            FeatureConfigurator.For("9ff81732daddb174aa8138ad1297c787").AddFeatureIfHasFact(checkedFact: $"{element.Name}BlastBase", feature: $"{element.Name}KineticBladeFeature").Configure();
-        }
-
+       
         #endregion
 
-        #region Light Blast Helpers
+        
 
-        private static ContextDiceValue PhysicalSimpleBlastDice()
-        {
-            return new ContextDiceValue()
-            {
-                DiceType = Kingmaker.RuleSystem.DiceType.D6,
-                DiceCountValue = new ContextValue()
-                {
-                    ValueType = ContextValueType.Rank,
-                    ValueRank = Kingmaker.Enums.AbilityRankType.DamageDice
-                },
-                BonusValue = new ContextValue()
-                {
-                    ValueType = ContextValueType.Shared,
-                }
-            };
-        }
-
-        private static ContextDiceValue EnergySimpleBlastDice()
-        {
-            return new ContextDiceValue()
-            {
-                DiceType = Kingmaker.RuleSystem.DiceType.D6,
-                DiceCountValue = new ContextValue()
-                {
-                    ValueType = ContextValueType.Rank,
-                    ValueRank = Kingmaker.Enums.AbilityRankType.DamageDice
-                },
-                BonusValue = new ContextValue()
-                {
-                    ValueType = ContextValueType.Rank,
-                    ValueRank = AbilityRankType.DamageBonus,
-                    ValueShared = AbilitySharedValue.DamageBonus
-                }
-            };
-        }
-
-        private static ContextDiceValue EnergyCompositeBlastDice()
-        {
-            return new ContextDiceValue()
-            {
-                DiceType = Kingmaker.RuleSystem.DiceType.D6,
-                DiceCountValue = new ContextValue()
-                {
-                    ValueType = ContextValueType.Rank,
-                    ValueRank = Kingmaker.Enums.AbilityRankType.DamageDice
-                },
-                BonusValue = new ContextValue()
-                {
-                    ValueType = ContextValueType.Rank,
-                    ValueRank = AbilityRankType.DamageBonus,
-                    ValueShared = AbilitySharedValue.Damage
-                }
-            };
-        }
-
-        private static ContextDiceValue PhysicalCompositeBlastDice()
-        {
-            return new ContextDiceValue()
-            {
-                DiceType = Kingmaker.RuleSystem.DiceType.D6,
-                DiceCountValue = new ContextValue()
-                {
-                    ValueType = ContextValueType.Rank,
-                    ValueRank = Kingmaker.Enums.AbilityRankType.DamageDice
-                },
-                BonusValue = new ContextValue()
-                {
-                    ValueType = ContextValueType.Rank,
-                    ValueRank = AbilityRankType.DamageBonus,
-                    ValueShared = AbilitySharedValue.Damage
-                }
-            };
-        }
+        
 
 
 
@@ -885,128 +444,13 @@ namespace PhoenixKineticistElements.ElementLight
 
 
 
-        #endregion
+        
 
         #region Blast Helpers
 
-        private static ActionsBuilder BuildChainableDamageAction(BlastElement element)
-        {
-            ContextDiceValue damageDiceValue = element.Composite ? (element.Physical ? PhysicalCompositeBlastDice() : EnergyCompositeBlastDice()) : element.Physical ? PhysicalSimpleBlastDice() : EnergySimpleBlastDice();
+        
 
-            ActionsBuilder ifTrue = ActionsBuilder.New();
-            if (element.damageType.Length == 2)
-            {
-                ifTrue.DealDamage(element.damageType[0]
-                   , value: damageDiceValue
-                   , useWeaponDamageModifiers: true,
-                       half: true
-                   )
-                .DealDamage(element.damageType[1]
-                , value: damageDiceValue
-                , useWeaponDamageModifiers: true,
-                    half: true
-                );
-            }
-            else
-            {
-                ifTrue.DealDamage(element.damageType[0]
-                   , value: damageDiceValue
-                   , useWeaponDamageModifiers: true,
-                       half: false
-                   );
-            }
-            ActionsBuilder ifFalse = ActionsBuilder.New()
-                .DealDamage(element.damageType[0]
-                   , value: damageDiceValue
-                   , useWeaponDamageModifiers: true,
-                       half: true
-                   );
-
-            return ActionsBuilder.New().Conditional(ConditionsBuilder.New().AddIsEqual(new DeliverEffectLayer(), new IntConstant() { Value = 0 }), ifTrue: ifTrue, ifFalse: ifFalse);
-        }
-
-        private static DamageTypeDescription BPSDamage()
-        {
-            return new()
-            {
-                Type = Kingmaker.RuleSystem.Rules.Damage.DamageType.Physical,
-                Physical = new()
-                {
-                    Form = Kingmaker.Enums.Damage.PhysicalDamageForm.Bludgeoning | Kingmaker.Enums.Damage.PhysicalDamageForm.Piercing |
-                               Kingmaker.Enums.Damage.PhysicalDamageForm.Slashing,
-                }
-            };
-        }
-
-
-
-        private static DamageTypeDescription ColdDamage()
-        {
-            return new()
-            {
-                Type = Kingmaker.RuleSystem.Rules.Damage.DamageType.Energy,
-                Energy = Kingmaker.Enums.Damage.DamageEnergyType.Cold
-            };
-        }
-
-        private static DamageTypeDescription BDamage()
-        {
-            return new()
-            {
-                Type = Kingmaker.RuleSystem.Rules.Damage.DamageType.Physical,
-                Physical = new()
-                {
-                    Form = Kingmaker.Enums.Damage.PhysicalDamageForm.Bludgeoning,
-                }
-            };
-        }
-
-        private static DamageTypeDescription BSDamage()
-        {
-            return new()
-            {
-                Type = Kingmaker.RuleSystem.Rules.Damage.DamageType.Physical,
-                Physical = new()
-                {
-                    Form = Kingmaker.Enums.Damage.PhysicalDamageForm.Bludgeoning |
-                               Kingmaker.Enums.Damage.PhysicalDamageForm.Slashing,
-                }
-            };
-        }
-
-        private static ContextRankConfig KinStatProperty(bool div2)
-        {
-            return new Kingmaker.UnitLogic.Mechanics.Components.ContextRankConfig()
-            {
-                m_Type = Kingmaker.Enums.AbilityRankType.DamageBonus,
-                m_BaseValueType = ContextRankBaseValueType.CustomProperty,
-                m_Stat = Kingmaker.EntitySystem.Stats.StatType.Constitution,
-                m_Max = 20,
-                m_Progression = div2 ? ContextRankProgression.Div2 : ContextRankProgression.AsIs,
-                m_CustomProperty = BlueprintTool.GetRef<BlueprintUnitPropertyReference>("f897845bbbc008d4f9c1c4a03e22357a")
-            };
-        }
-
-
-
-        #endregion
-
-
-
-
-
-
-
-        private static ContextRankConfig KineticBlastFeatureCountConfig()
-        {
-            return (new Kingmaker.UnitLogic.Mechanics.Components.ContextRankConfig()
-            {
-                m_Type = Kingmaker.Enums.AbilityRankType.DamageDice,
-                m_BaseValueType = ContextRankBaseValueType.FeatureRank,
-                m_Feature = BlueprintTool.GetRef<BlueprintFeatureReference>("93efbde2764b5504e98e6824cab3d27c"),
-                m_Max = 20
-            });
-        }
+        
 
 
 
@@ -1104,6 +548,29 @@ namespace PhoenixKineticistElements.ElementLight
 
         }
 
+        public static void MakeSkilledKineticistXBuff(string elementName, StatType skill)
+        {
+            var guid = Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"SkilledKineticist{elementName}", BlueprintTool.Get<BlueprintFeature>("fd13e9efee08db448974fe0263eb96c8").AssetGuid, BlueprintTool.Get<BlueprintProgression>($"ElementalFocus{elementName}").AssetGuid);
+
+            var buff = BuffConfigurator.New($"SkilledKineticist{elementName}Buff", guid.m_Guid.ToString())
+                .AddContextRankConfig(new ContextRankConfig()
+                {
+                    m_BaseValueType = ContextRankBaseValueType.ClassLevel,
+                    m_Progression = ContextRankProgression.Div2,
+                    m_Class = [BlueprintTool.GetRef<BlueprintCharacterClassReference>("42a455d9ec1ad924d889272429eb8391")]
+                })
+                .AddContextStatBonus(skill, value: new ContextValue() { ValueType = ContextValueType.Rank }, descriptor: ModifierDescriptor.UntypedStackable, multiplier: 1)
+                .SetDisplayName(BlueprintTool.Get<BlueprintFeature>("fd13e9efee08db448974fe0263eb96c8").m_DisplayName)
+                .SetIsClassFeature(true)
+                .SetFlags(BlueprintBuff.Flags.HiddenInUi, BlueprintBuff.Flags.StayOnDeath)
+                .Configure();
+
+            BuffConfigurator.For("56b70109d78b0444cb3ad04be3b1ee9e")
+                .AddFeatureIfHasFact($"ElementalFocus{elementName}", buff)
+                .AddFeatureIfHasFact($"KineticKnightElementalFocus{elementName}", buff)
+                .Configure();
+        }
+
 
 
         public static AbilityConfigurator AddKBRicochet(this AbilityConfigurator input, string projectile)
@@ -1124,48 +591,9 @@ namespace PhoenixKineticistElements.ElementLight
 
 
 
-        #region infusion
-
-        private static void CreateInfusions()
-        {
-            CreateIlluminatingInfusion();
-            CreatePhotokineticInfusion();
-            CreateBeaconInfusion();
-            CreateObfuscatingInfusion();
-            CreateOverloadInfusion();
-            CreateColorburstInfusion();
-        }
-
-        private static void CreateColorburstInfusion()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void CreateOverloadInfusion()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void CreateObfuscatingInfusion()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void CreatePhotokineticInfusion()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void CreateBeaconInfusion()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void CreateIlluminatingInfusion()
-        {
-            throw new NotImplementedException();
-        }
+        
         #endregion
+        
 
     }
 }
