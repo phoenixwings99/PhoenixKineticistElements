@@ -1028,19 +1028,8 @@ namespace PhoenixKineticistElements.ElementLight
                 .SetStacking(StackingType.Replace)
                 .SetIsClassFeature(true)
                 .SetFxOnStart("bde04297a8dc74b4fa22480f4e40133b")
-                .AddMirrorImage(maxCount: 50, count: new ContextDiceValue()
-                {
-                    BonusValue = 1,
-                    DiceCountValue = new ContextValue()
-                    {
-                        ValueRank= AbilityRankType.StatBonus,
-                        ValueType = ContextValueType.Rank
-                        
-
-                    },           
-                    DiceType = Kingmaker.RuleSystem.DiceType.One
-
-                } )
+                .AddComponent<AddMirrorImageRenewable>(x=>{
+                })
                 
                 .SetRanks(0)
                 .Configure();
@@ -1067,10 +1056,13 @@ namespace PhoenixKineticistElements.ElementLight
             AbilityConfigurator.New("IllusoryDuplicatesAbility", "67E50DF0-B17A-4A17-848D-1899D1BF0374")
                 .SetDisplayName("IllusoryDuplicates.Name")
                 .SetDescription("IllusoryDuplicates.Desc")
-                .AddAbilityEffectRunAction(ActionsBuilder.New().ApplyBuffPermanent("IllusoryDuplicatesUpgradeBuff", isNotDispelable: true, isFromSpell: false, asChild: true)
-                    .RemoveBuff("IllusoryDuplicatesEffectBuff")
-                    .ApplyBuffPermanent("IllusoryDuplicatesEffectBuff", isNotDispelable: true, isFromSpell: false, asChild: true)
+                .AddAbilityEffectRunAction(
+                ActionsBuilder.New()
+                        .ApplyBuffPermanent("IllusoryDuplicatesUpgradeBuff", isNotDispelable: true, isFromSpell: false, asChild: true)
+                    //                    .RemoveBuff("IllusoryDuplicatesEffectBuff")
+                    //                    .ApplyBuffPermanent("IllusoryDuplicatesEffectBuff", isNotDispelable: true, isFromSpell: false, asChild: true)
                     )
+                .AddComponent<AbilityAddAnIllusoryDuplicate>()
                 .SetCanTargetSelf(true)
                 .SetActionType(Kingmaker.UnitLogic.Commands.Base.UnitCommand.CommandType.Free) 
                 .SetAnimation(UnitAnimationActionCastSpell.CastAnimationStyle.Omni)

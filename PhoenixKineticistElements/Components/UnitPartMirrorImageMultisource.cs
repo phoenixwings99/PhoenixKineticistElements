@@ -4,6 +4,7 @@ using Kingmaker.UnitLogic.Buffs;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
 using Kingmaker.Utility;
 using Kingmaker.Visual.Particles;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,19 +16,22 @@ namespace PhoenixKineticistElements.Components
 {
     public class UnitPartMirrorImageMultisource : OldStyleUnitPart
     {
-        public List<Tuple<int, Buff>> ImagesFromSource = new List<Tuple<int, Buff>>();
+
+        [JsonProperty]
+        public List<MirrorImageInstance> Images = new List<MirrorImageInstance>();
+        
 
         public bool ConsiderRemove()
         {
-            return ImagesFromSource.Count == 0;
+            return Images.Count == 0;
 
         }
 
         internal void RemoveImagesFromSource(Buff source)
         {
-            ImagesFromSource.RemoveAll(x =>
+            Images.RemoveAll(x =>
             {
-                return x.Item2 == source;
+                return x.buff  == source;
             });
         }
 
@@ -36,36 +40,63 @@ namespace PhoenixKineticistElements.Components
 
 
 
-        internal void AddImageFromSource(int imageNum, Buff source)
+        internal void AddImageFromSource(int imageNum, Buff source, bool persistant)
         {
-            Main.Log.Log($"UnitPartMirrorImageMultisource.Init: adding image at val {imageNum} from {source.Name}");
-            ImagesFromSource.Add(new(imageNum, source));
+            Main.Log.Log($"UnitPartMirrorImageMultisource.AddImageFromSource: adding image at val {imageNum} from {source.Name}");
+            Images.Add(new(imageNum, persistant, source, true));
         }
 
-        internal void RemoveImage(int v)
+        internal void ExpendImage(int v)
         {
-            var maybe = ImagesFromSource.First(x =>
+            var maybe = Images.First(x =>
             {
-                return x.Item1 == v;
+                return x.indexThingy == v;
             });
-            var maybeBuff = maybe.Item2;
+            var maybeBuff = maybe.buff;
             if (maybe != null)
             {
                 Main.Log.Log($"UnitPartMirrorImageMultisource.RemoveImage: adding image at val {v} from {maybeBuff.Name}");
                 
-                ImagesFromSource.Remove(maybe);
+                if (maybe.persistant)
+                {
+                    maybe.active = false;
+                }
+                else
+                {
+                    Images.Remove(maybe);
+                    if (!Images.Any(x => x.buff == maybeBuff))
+                    {
+                        Main.Log.Log($"UnitPartMirrorImageMultisource.RemoveImage: removing buff {maybeBuff.Name}");
+                        maybeBuff.Remove();
+                    }
+                }            
             }
-            if (!ImagesFromSource.Any(x=> x.Item2 == maybeBuff))
-            {
-                Main.Log.Log($"UnitPartMirrorImageMultisource.RemoveImage: removing buff {maybeBuff.Name}");
-                maybeBuff.Remove();
-            }
+            
 
         }
 
-        
 
 
-        
+        public class MirrorImageInstance
+        {
+            [JsonProperty]
+            public int indexThingy;
+            [JsonProperty]
+            public bool persistant;
+            [JsonProperty]
+            public Buff buff;
+            [JsonProperty]
+            public bool active;
+
+            public MirrorImageInstance(int indexThingy, bool persistant, Buff buff, bool active)
+            {
+                this.indexThingy = indexThingy;
+                this.persistant = persistant;
+                this.buff = buff;
+                this.active = active;
+            }
+        }
+
+
     }
 }

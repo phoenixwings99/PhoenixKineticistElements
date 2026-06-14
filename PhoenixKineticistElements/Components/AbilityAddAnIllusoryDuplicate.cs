@@ -19,7 +19,7 @@ namespace PhoenixKineticistElements.Components
         {
             target.Unit.Ensure<UnitPartIllusoryDuplicates>();
             target.Unit.Ensure<UnitPartMirrorImage>();
-            target.Unit.Get<UnitPartMirrorImage>().AddIllusoryDuplicate();
+            target.Unit.Get<UnitPartIllusoryDuplicates>().AddIllusion();
         }
     }
 }

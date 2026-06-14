@@ -1,7 +1,9 @@
-﻿using Kingmaker.Blueprints;
+﻿using BlueprintCore.Utils;
+using Kingmaker.Blueprints;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.PubSubSystem;
 using Kingmaker.UnitLogic;
+using Kingmaker.UnitLogic.Buffs.Blueprints;
 using Kingmaker.UnitLogic.Class.LevelUp;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace PhoenixKineticistElements.Components
         public void HandleUnitAfterLevelUp(UnitEntityData unit, LevelUpController controller)
         {
             Main.Log.Log("AddIllusoryDuplicates leveluphandler firing");
+            Owner.AddBuff(BlueprintTool.Get<BlueprintBuff>("IllusoryDuplicatesEffectBuff"), Owner.Context);
             base.Owner.Ensure<UnitPartIllusoryDuplicates>().DeployAllowedDuplicates();
             
 
