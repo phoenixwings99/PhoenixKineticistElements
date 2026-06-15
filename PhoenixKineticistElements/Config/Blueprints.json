@@ -7,7 +7,9 @@
     "CrystalBlastFeature": "948BD692-A37A-4CB6-A129-0BBDBF2B2F9F",
     "AuroraBlastFeature": "D8E0DE4B-66AC-44D0-B1B6-68A611F9DCF9",
     "GloriousBlastFeature": "56FF6626-A7B1-465B-9F16-E6F146DD2A23",
-    "RainbowBlastFeature": "6732B69D-44CB-41D7-B500-1D4F513641AD"
+    "RainbowBlastFeature": "6732B69D-44CB-41D7-B500-1D4F513641AD",
+    "LightningBlastFeature": "CB8A5A0E-F3FD-4BD3-B030-5434E8E03F6B",
+    "SolarBlastFeature": "4E00DB97-6E8D-4600-A72B-C5970324D99A"
   },
   "DerivedBlueprintMasters": {
     "ExtendedRangeXBlastAbility": "47e78a76-e302-4615-995a-03331be6d730",

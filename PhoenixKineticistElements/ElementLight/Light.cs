@@ -83,11 +83,39 @@ namespace PhoenixKineticistElements.ElementLight
 
         public static void Configure()
         {
+            //
+
+
+            //TODO DARK CODEX UNIVERSALS
+            /*
+             * Kinetic Fist
+             * Blade Rush 
+             * Chain INfusion
+             * Add To Expanded Element
+             * Whip Infusion
+             */
+
+            //TODO For Light Compat (check for which mods as implementing)
+            /*
+             * Pushing
+             * Bowling
+             * Entangling
+             * Deadly Earth
+            *   Chain
+            *   Chain Arrows
+            *   Chilling
+            *   Cyclone
+            *   Eruption
+             */
+
+            //TODO Get the Light Blast showing in selection
+
 
             baseIcon = BlueprintTool.Get<BlueprintAbility>("bf0accce250381a44b857d4af6c8e10d").Icon;//Searing Light
             baseIconMelee = BlueprintTool.Get<BlueprintActivatableAbility>("24ee96e7c589333468da975fd3892a8d").Icon;//Searing Light
             
             string holyeffect = BlueprintTool.Get<BlueprintWeaponEnchantment>("28a9964d81fedae44bae3ca45710c140").WeaponFxPrefab.AssetId;
+            string lightningeffect = BlueprintTool.Get<BlueprintWeaponEnchantment>("7bda5277d36ad114f9f9fd21d0dab658").WeaponFxPrefab.AssetId;
             kinBlade = BlueprintTool.Get<BlueprintFeature>("9ff81732daddb174aa8138ad1297c787");
             kinBladeBuff = BlueprintTool.Get<BlueprintBuff>("426a9c079ee7ac34aa8e0054f2218074");
             KinBladeInventoryIcon = BlueprintTool.Get<BlueprintItemWeapon>("43ff67143efb86d4f894b10577329050").Icon;
@@ -104,7 +132,7 @@ namespace PhoenixKineticistElements.ElementLight
                 DefaultIconMelee = baseIconMelee,
                 FeatureGuid = "A06EC6C0-92DB-4E40-B438-2932CB138CD7",
                 damageType = new[] { ElementFactories.BPSDamage() },
-                ProjectileGuid = "2511627d593387d4d89004bec111ba31", //Searing Light
+                ProjectileGuid = "d543d55f7fdb60340af40ea8fc5e686d", //Arrow Of Purity
                 weaponfx = holyeffect
 
             };
@@ -185,14 +213,49 @@ namespace PhoenixKineticistElements.ElementLight
 
             };
 
+            var LightningBlast = new BlastElement()
+            {
+                Name = "Lightning",
+                Composite = true,
+                Physical = true,
+                DefaultIcon = baseIcon,
+                DefaultIconMelee = baseIconMelee,
+                FeatureGuid = "CB8A5A0E-F3FD-4BD3-B030-5434E8E03F6B",
+                damageType = new[] { ElementFactories.BDamage(), ElementFactories.LDamage() },
+                ProjectileGuid = "c7734162c01abdc478418bfb286ed7a5",
+                weaponfx = lightningeffect,
+                Burn = 2
+            };
 
-            ConfigureXBlast(LightBlast);
+            var SolarBlast = new BlastElement()
+            {
+                Name= "Solar",
+                Composite = true,
+                Physical = true,
+                DefaultIcon = baseIcon,
+                DefaultIconMelee = baseIconMelee,
+                FeatureGuid = "4E00DB97-6E8D-4600-A72B-C5970324D99A",
+                damageType = new[] { ElementFactories.BDamage(), ElementFactories.FDamage() },
+                ProjectileGuid = "c4b0d8b4786a1244d9fbc4b424931b83",
+                weaponfx = holyeffect,
+                Burn = 2
 
-            ConfigureXBlast(AuroraBlast);
+                
+            }; 
 
-            ConfigureXBlast(RainbowBlast);
+            ElementFactories.ConfigureXBlast(LightBlast);
 
-            ConfigureXBlast(GloriousBlast);
+            ElementFactories.ConfigureXBlast(AuroraBlast);
+
+            ElementFactories.ConfigureXBlast(RainbowBlast);
+
+            ElementFactories.ConfigureXBlast(GloriousBlast);
+
+            ElementFactories.ConfigureXBlast(BioluminescentBlast);
+
+            ElementFactories.ConfigureXBlast(CrystalBlast);
+            ElementFactories.ConfigureXBlast(SolarBlast);
+            ElementFactories.ConfigureXBlast(LightningBlast);
 
 
 
@@ -206,11 +269,32 @@ namespace PhoenixKineticistElements.ElementLight
 
             FeatureSelectionConfigurator.For("1f3a15a3ae8a5524ab8b97f469bf4e3d").AddToAllFeatures("ElementalFocusLight").Configure();
 
+            //Vanilla Substance Infusions
+
+            //Bowling INfusion
+
+            ElementFactories.AddToSubstanceInfusion(CrystalBlast, "b3bd080eed83a9940abd97e4aa2a7341", "918b2524af5c3f647b5daa4f4e985411");
+
+            //Burning Infusion
+            //NONE
+
+            //Chilling INfusion
+            ElementFactories.AddToSubstanceInfusion(AuroraBlast, "6ac87a3af9ccf014787c49745df75e6a", "49fc69c05ff7c5d46b61745d361a72fb");
+
             //Dazzling Infusion
             ElementFactories.AddToSubstanceInfusion(LightBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
             ElementFactories.AddToSubstanceInfusion(GloriousBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
             ElementFactories.AddToSubstanceInfusion(RainbowBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
             ElementFactories.AddToSubstanceInfusion(AuroraBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
+            ElementFactories.AddToSubstanceInfusion(BioluminescentBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
+            ElementFactories.AddToSubstanceInfusion(CrystalBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
+            ElementFactories.AddToSubstanceInfusion(SolarBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
+            ElementFactories.AddToSubstanceInfusion(LightningBlast, "037460f7ae3e21943b237007f2b1a5d5", "ee8d9f5631c53684d8d627d715eb635c");
+
+            //Entangling INfusion
+            ElementFactories.AddToSubstanceInfusion(AuroraBlast, "607539d018d03454aaac0a2c1522f7ac", "738120aad01eedb4f891eca5b784646a");
+            ElementFactories.AddToSubstanceInfusion(BioluminescentBlast, "607539d018d03454aaac0a2c1522f7ac", "738120aad01eedb4f891eca5b784646a");
+            ElementFactories.AddToSubstanceInfusion(CrystalBlast, "607539d018d03454aaac0a2c1522f7ac", "738120aad01eedb4f891eca5b784646a");
 
             //Flash Infusion
 
@@ -218,102 +302,36 @@ namespace PhoenixKineticistElements.ElementLight
             ElementFactories.AddToSubstanceInfusion(GloriousBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
             ElementFactories.AddToSubstanceInfusion(RainbowBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
             ElementFactories.AddToSubstanceInfusion(AuroraBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
+            ElementFactories.AddToSubstanceInfusion(BioluminescentBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
+            ElementFactories.AddToSubstanceInfusion(CrystalBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
+            ElementFactories.AddToSubstanceInfusion(SolarBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
+            ElementFactories.AddToSubstanceInfusion(LightningBlast, "37f3cfca29073e142a80c3b8e7c54b05", "50cf40b1cb3115546a3e9b44d7687384");
+
+            //Foxfire Infusion
+            //NONE
+
+            //Grappling Infusion
+            //Part of Cloud/Wall/Deadly Earth!!!
+
+            //Pushing INfusion
+            ElementFactories.AddToSubstanceInfusion(BioluminescentBlast, "fbb97f35a41b71c4cbc36c5f3995b892", "f795bede8baefaf4d9d7f404ede960ba");
+            ElementFactories.AddToSubstanceInfusion(CrystalBlast, "fbb97f35a41b71c4cbc36c5f3995b892", "f795bede8baefaf4d9d7f404ede960ba");
+
+            //Synaptic Infusion
+            ElementFactories.AddToSubstanceInfusion(LightningBlast, "53c80f136f2bf65409d358f28b0c5bb4", "67fc7492f198c8d4aace14d28e0ad438");
+
+            //Unravelling INvusion
+            ElementFactories.AddToSubstanceInfusion(SolarBlast, "79339d57d491d824ba0aa4ed0c114b2f", "cebd08ab72f1baa4eaacdd836207873a");
+
+
+
+
+
 
             MakeSkilledKineticistXBuff("Light", StatType.SkillLoreNature);
         }
 
-        private static void ConfigureXBlast(BlastElement element)
-        {
-
-            var genericBlastFeature = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XBlastFeature");
-            var genericBlastBaseAbility = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XBlastBase");
-            var genericBlast = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XBlastAbility");
-            var ERBlast = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("ExtendedRangeXBlastAbility");
-            var bladerootfeature = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XKineticBladeFeature");
-            var kbxblastability = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("KineticBladeXBlastAbility");
-            var kbxblastbuff = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("KineticBladeXBlastBuff");
-            var kbxblastweapon = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XKineticBladeWeapon");
-            var kbxblastburnability = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("KineticBladeXBlastBurnAbility");
-            var kbxblastdamage = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XBlastBladeDamage");
-            var kbxenchantment = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XKineticBladeEnchantment");
-
-
-            FeatureConfigurator.New($"{element.Name}BlastFeature", element.FeatureGuid)
-                .SetDisplayName($"{element.Name}BlastAbility.Name")
-                .SetDescription($"{element.Name}BlastAbility.Desc")
-                .Configure();
-            AbilityConfigurator.New($"{element.Name}BlastBase", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"{element.Name}BlastBase", genericBlastBaseAbility, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
-                .SetDisplayName($"{element.Name}BlastAbility.Name")
-                .SetDescription($"{element.Name}BlastAbility.Desc")
-                .Configure();
-            AbilityConfigurator.New($"{element.Name}BlastAbility", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"{element.Name}BlastAbility", genericBlast, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
-                .SetDisplayName($"{element.Name}BlastAbility.Name")
-                .SetDescription($"{element.Name}BlastAbility.Desc")
-                .Configure();
-            AbilityConfigurator.New($"ExtendedRange{element.Name}BlastAbility", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"ExtendedRange{element.Name}BlastAbility", ERBlast, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
-                .SetDisplayName(BlueprintTool.Get<BlueprintFeature>("cb2d9e6355dd33940b2bef49e544b0bf").m_DisplayName)
-                .SetDescription(BlueprintTool.Get<BlueprintFeature>("cb2d9e6355dd33940b2bef49e544b0bf").m_Description)
-                .Configure();
-            FeatureConfigurator.New($"{element.Name}KineticBladeFeature", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"{element.Name}KineticBladeFeature", bladerootfeature, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
-                .SetHideInUI(true)
-                .SetHideInCharacterSheetAndLevelUp(true)
-                .Configure();
-            ActivatableAbilityConfigurator.New($"KineticBlade{element.Name}BlastAbility", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"KineticBlade{element.Name}BlastAbility", kbxblastability, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
-                .SetDisplayName($"{element.Name}KineticBlade.Name")
-                .SetDescription(kinBlade.m_Description)
-                .Configure();
-            BuffConfigurator.New($"KineticBlade{element.Name}BlastBuff", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"KineticBlade{element.Name}BlastBuff", kbxblastbuff, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
-               .SetFlags(BlueprintBuff.Flags.HiddenInUi, BlueprintBuff.Flags.StayOnDeath)
-               .Configure();
-            ItemWeaponConfigurator.New($"{element.Name}KineticBladeWeapon", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"{element.Name}KineticBladeWeapon", kbxblastweapon, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
-                .Configure();
-
-            AbilityConfigurator.New($"KineticBlade{element.Name}BlastBurnAbility", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"KineticBlade{element.Name}BlastBurnAbility", kbxblastburnability, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
-                .Configure();
-
-            AbilityConfigurator.New($"{element.Name}BlastBladeDamage", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"{element.Name}BlastBladeDamage", kbxblastdamage, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
-                .Configure();
-
-            WeaponEnchantmentConfigurator.New($"{element.Name}KineticBladeEnchantment", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"{element.Name}KineticBladeEnchantment", kbxenchantment, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
-                .SetEnchantName($"{element.Name}KineticBlade.Name")
-                .SetPrefix($"{element.Name}Blast.Name")
-                .Configure();
-
-            //TODO INSERT SETTINGS HERE
-
-
-
-            ElementFactories.CreateXBlastFeature(element);
-
-            ElementFactories.CreateXBlastBaseAbility(element);
-
-            ElementFactories.CreateXBlastVariant_Base(element);
-
-            ElementFactories.CreateXBlastVariant_ExtendedRange(element);
-
-            ElementFactories.CreateXKineticBladeFeature(element);
-
-            ElementFactories.CreateKineticBladeXBlastAbility(element);
-
-            ElementFactories.CreateKineticBladeXBuffAbility(element);
-
-            ElementFactories.MakeXKineticBladeWeapon(element);
-
-            ElementFactories.MakeKineticBladeXBlastBurnAbility(element);
-
-            ElementFactories.CreateXBlastBladeDamage(element);
-
-            ElementFactories.XKineticBladeEnchantment(element);
-
-           
-
-            AbilityConfigurator.For("80f10dc9181a0f64f97a9f7ac9f47d65").EditComponent<AbilityCasterHasFacts>(x =>
-            {
-
-                x.m_Facts = x.m_Facts.AddItem<BlueprintUnitFactReference>(BlueprintTool.GetRef<BlueprintUnitFactReference>($"KineticBlade{element.Name}BlastBuff")).ToArray();
-            }).Configure();
-        }
-
+        
 
         #region foci
 

@@ -69,9 +69,41 @@ public static class Main {
         }
     }
 
+    [HarmonyPatch(typeof(BlueprintsCache))]
+    public static class BlueprintsCaches_Patch2
+    {
+        private static bool Initialized = false;
+
+        [HarmonyPriority(Priority.Last)]
+        [HarmonyPatch(nameof(BlueprintsCache.Init)), HarmonyPostfix]
+        public static void Init_Postfix()
+        {
+            try
+            {
+                BasicKinesis.Patch();
+            }
+            catch (Exception e)
+            {
+                Log.Log(string.Concat("Failed to initialize Late Patch.", e));
+            }
+        }
+    }
+
     private static bool? DarkCodexInstalled;
     public static bool IsDarkCodexInstalled()
     {
         return DarkCodexInstalled ??= UnityModManager.modEntries.Exists(x => x.Info.Id.Equals("DarkCodex"));
+    }
+
+    private static bool? KineticistElementsExpandedInstalled;
+    public static bool IsKineticistElementsExpandedInstalled()
+    {
+        return KineticistElementsExpandedInstalled ??= UnityModManager.modEntries.Exists(x => x.Info.Id.Equals("KineticistElementsExpanded"));
+    }
+
+    private static bool? KineticistArchetypesInstalled;
+    public static bool IsKineticistArchetypesInstalled()
+    {
+        return KineticistArchetypesInstalled ??= UnityModManager.modEntries.Exists(x => x.Info.Id.Equals("KineticArchetypes"));
     }
 }

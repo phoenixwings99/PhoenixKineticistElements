@@ -3,6 +3,7 @@ using BlueprintCore.Actions.Builder.ContextEx;
 using BlueprintCore.Blueprints.Configurators.Items.Ecnchantments;
 using BlueprintCore.Blueprints.Configurators.Items.Weapons;
 using BlueprintCore.Blueprints.Configurators.UnitLogic.ActivatableAbilities;
+using BlueprintCore.Blueprints.CustomConfigurators;
 using BlueprintCore.Blueprints.CustomConfigurators.Classes;
 using BlueprintCore.Blueprints.CustomConfigurators.UnitLogic.Abilities;
 using BlueprintCore.Blueprints.CustomConfigurators.UnitLogic.Buffs;
@@ -18,6 +19,7 @@ using Kingmaker.Enums;
 using Kingmaker.RuleSystem.Rules.Damage;
 using Kingmaker.UnitLogic.Abilities;
 using Kingmaker.UnitLogic.Abilities.Blueprints;
+using Kingmaker.UnitLogic.Abilities.Components.CasterCheckers;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
 using Kingmaker.UnitLogic.Class.Kineticist;
 using Kingmaker.UnitLogic.Mechanics;
@@ -36,9 +38,128 @@ namespace PhoenixKineticistElements
     public static class ElementFactories
     {
 
-       static BlueprintFeature   kinBlade = BlueprintTool.Get<BlueprintFeature>("9ff81732daddb174aa8138ad1297c787");
+        static BlueprintFeature kinBlade = BlueprintTool.Get<BlueprintFeature>("9ff81732daddb174aa8138ad1297c787");
         static BlueprintBuff kinBladeBuff = BlueprintTool.Get<BlueprintBuff>("426a9c079ee7ac34aa8e0054f2218074");
-        static Sprite    KinBladeInventoryIcon = BlueprintTool.Get<BlueprintItemWeapon>("43ff67143efb86d4f894b10577329050").Icon; 
+        static Sprite KinBladeInventoryIcon = BlueprintTool.Get<BlueprintItemWeapon>("43ff67143efb86d4f894b10577329050").Icon;
+
+
+        public static void ConfigureXBlast(BlastElement element)
+        {
+
+            var genericBlastFeature = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XBlastFeature");
+            var genericBlastBaseAbility = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XBlastBase");
+            var genericBlast = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XBlastAbility");
+            var ERBlast = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("ExtendedRangeXBlastAbility");
+            var bladerootfeature = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XKineticBladeFeature");
+            var kbxblastability = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("KineticBladeXBlastAbility");
+            var kbxblastbuff = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("KineticBladeXBlastBuff");
+            var kbxblastweapon = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XKineticBladeWeapon");
+            var kbxblastburnability = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("KineticBladeXBlastBurnAbility");
+            var kbxblastdamage = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XBlastBladeDamage");
+            var kbxenchantment = Main.LocalPKEModContext.Blueprints.GetDerivedMaster("XKineticBladeEnchantment");
+
+
+            FeatureConfigurator.New($"{element.Name}BlastFeature", element.FeatureGuid)
+                .SetDisplayName($"{element.Name}BlastAbility.Name")
+                .SetDescription($"{element.Name}BlastAbility.Desc")
+                .Configure();
+            AbilityConfigurator.New($"{element.Name}BlastBase", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"{element.Name}BlastBase", genericBlastBaseAbility, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
+                .SetDisplayName($"{element.Name}BlastAbility.Name")
+                .SetDescription($"{element.Name}BlastAbility.Desc")
+                .Configure();
+            AbilityConfigurator.New($"{element.Name}BlastAbility", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"{element.Name}BlastAbility", genericBlast, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
+                .SetDisplayName($"{element.Name}BlastAbility.Name")
+                .SetDescription($"{element.Name}BlastAbility.Desc")
+                .Configure();
+            AbilityConfigurator.New($"ExtendedRange{element.Name}BlastAbility", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"ExtendedRange{element.Name}BlastAbility", ERBlast, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
+                .SetDisplayName(BlueprintTool.Get<BlueprintFeature>("cb2d9e6355dd33940b2bef49e544b0bf").m_DisplayName)
+                .SetDescription(BlueprintTool.Get<BlueprintFeature>("cb2d9e6355dd33940b2bef49e544b0bf").m_Description)
+                .Configure();
+            FeatureConfigurator.New($"{element.Name}KineticBladeFeature", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"{element.Name}KineticBladeFeature", bladerootfeature, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
+                .SetHideInUI(true)
+                .SetHideInCharacterSheetAndLevelUp(true)
+                .Configure();
+            ActivatableAbilityConfigurator.New($"KineticBlade{element.Name}BlastAbility", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"KineticBlade{element.Name}BlastAbility", kbxblastability, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
+                .SetDisplayName($"{element.Name}KineticBlade.Name")
+                .SetDescription(kinBlade.m_Description)
+                .Configure();
+            BuffConfigurator.New($"KineticBlade{element.Name}BlastBuff", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"KineticBlade{element.Name}BlastBuff", kbxblastbuff, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
+               .SetFlags(BlueprintBuff.Flags.HiddenInUi, BlueprintBuff.Flags.StayOnDeath)
+               .Configure();
+            ItemWeaponConfigurator.New($"{element.Name}KineticBladeWeapon", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"{element.Name}KineticBladeWeapon", kbxblastweapon, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
+                .Configure();
+
+            AbilityConfigurator.New($"KineticBlade{element.Name}BlastBurnAbility", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"KineticBlade{element.Name}BlastBurnAbility", kbxblastburnability, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
+                .Configure();
+
+            AbilityConfigurator.New($"{element.Name}BlastBladeDamage", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"{element.Name}BlastBladeDamage", kbxblastdamage, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
+                .Configure();
+
+            WeaponEnchantmentConfigurator.New($"{element.Name}KineticBladeEnchantment", Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"{element.Name}KineticBladeEnchantment", kbxenchantment, Main.LocalPKEModContext.Blueprints.GetGUID($"{element.Name}BlastFeature")).m_Guid.ToString())
+                .SetEnchantName($"{element.Name}KineticBlade.Name")
+                .SetPrefix($"{element.Name}Blast.Name")
+                .Configure();
+
+            //TODO INSERT SETTINGS HERE
+
+
+
+            ElementFactories.CreateXBlastFeature(element);
+
+            ElementFactories.CreateXBlastBaseAbility(element);
+
+            ElementFactories.CreateXBlastVariant_Base(element);
+
+            ElementFactories.CreateXBlastVariant_ExtendedRange(element);
+
+            ElementFactories.CreateXKineticBladeFeature(element);
+
+            ElementFactories.CreateKineticBladeXBlastAbility(element);
+
+            ElementFactories.CreateKineticBladeXBuffAbility(element);
+
+            ElementFactories.MakeXKineticBladeWeapon(element);
+
+            ElementFactories.MakeKineticBladeXBlastBurnAbility(element);
+
+            ElementFactories.CreateXBlastBladeDamage(element);
+
+            ElementFactories.XKineticBladeEnchantment(element);
+
+            //KineticWhirlwind
+            AbilityConfigurator.For("80f10dc9181a0f64f97a9f7ac9f47d65").EditComponent<AbilityCasterHasFacts>(x =>
+            {
+                x.m_Facts = x.m_Facts.AddItem(BlueprintTool.GetRef<BlueprintUnitFactReference>($"KineticBlade{element.Name}BlastBuff")).ToArray();
+
+            }).Configure();
+
+
+            
+
+
+            static void AddToUniversalBlastBuffOptions(string buffId, BlastElement element)
+            {
+                BuffConfigurator.For(buffId).EditComponent<AddKineticistBurnModifier>(x =>
+                {
+                    x.m_AppliableTo = x.m_AppliableTo.AddItem(BlueprintTool.GetRef<BlueprintAbilityReference>($"{element.Name}BlastBase")).ToArray();
+
+                }).Configure();
+            }
+            AddToUniversalBlastBuffOptions("a4018afcb4a84c0aad23f16448cdbbe1", element);//Armor Piercing Blast
+            AddToUniversalBlastBuffOptions("f583e43e4c904c1e854c479a280ab657", element);//Chain Arrows
+            AddToUniversalBlastBuffOptions("132f24437854435eb903f11d47062b1a", element);//Cluster Arrows
+
+
+        }
+
+        public static void ConfigureXBlastLate(BlastElement element)
+        {
+            if (Main.IsDarkCodexInstalled())
+            {
+
+            }
+        }
+
 
         public static void CreateKineticBladeXBlastAbility(BlastElement element)
         {
@@ -336,6 +457,25 @@ namespace PhoenixKineticistElements
 
         }
 
+        public static ContextDiceValue PhysicalCompositeBlastDice()
+        {
+            return new ContextDiceValue()
+            {
+                DiceType = Kingmaker.RuleSystem.DiceType.D6,
+                DiceCountValue = new ContextValue()
+                {
+                    ValueType = ContextValueType.Rank,
+                    ValueRank = Kingmaker.Enums.AbilityRankType.DamageDice
+                },
+                BonusValue = new ContextValue()
+                {
+                    ValueType = ContextValueType.Shared,
+                    ValueRank = AbilityRankType.DamageBonus,
+                    ValueShared = AbilitySharedValue.Damage
+                }
+            };
+        }
+
         public static ContextDiceValue PhysicalSimpleBlastDice()
         {
             return new ContextDiceValue()
@@ -349,6 +489,8 @@ namespace PhoenixKineticistElements
                 BonusValue = new ContextValue()
                 {
                     ValueType = ContextValueType.Shared,
+                    ValueRank = AbilityRankType.Default,
+                    ValueShared = AbilitySharedValue.Damage
                 }
             };
         }
@@ -404,7 +546,21 @@ namespace PhoenixKineticistElements
             };
         }
 
+        public static ContextRankConfig CompositeEnergyBlastDamageConfigDiceCount(BlastElement element)
+        {
+            return new ContextRankConfig()
+            {
+                m_Type = AbilityRankType.DamageDice,
+                m_BaseValueType = ContextRankBaseValueType.FeatureListRanks,
 
+                m_Feature = BlueprintTool.GetRef<BlueprintFeatureReference>("93efbde2764b5504e98e6824cab3d27c"),
+                m_Progression = ContextRankProgression.MultiplyByModifier,
+                m_BuffRankMultiplier = 1,
+                m_StartLevel = 0,
+                m_StepLevel = 2,
+
+            };
+        }
 
 
 
@@ -424,24 +580,9 @@ namespace PhoenixKineticistElements
             });
         }
 
-        public static ContextDiceValue PhysicalCompositeBlastDice()
-        {
-            return new ContextDiceValue()
-            {
-                DiceType = Kingmaker.RuleSystem.DiceType.D6,
-                DiceCountValue = new ContextValue()
-                {
-                    ValueType = ContextValueType.Rank,
-                    ValueRank = Kingmaker.Enums.AbilityRankType.DamageDice
-                },
-                BonusValue = new ContextValue()
-                {
-                    ValueType = ContextValueType.Rank,
-                    ValueRank = AbilityRankType.DamageBonus,
-                    ValueShared = AbilitySharedValue.Damage
-                }
-            };
-        }
+
+
+
 
         public static ActionsBuilder BuildChainableDamageAction(BlastElement element)
         {
@@ -492,7 +633,7 @@ namespace PhoenixKineticistElements
             };
         }
 
-
+        #region damage helpers
 
         public static DamageTypeDescription ColdDamage()
         {
@@ -500,6 +641,24 @@ namespace PhoenixKineticistElements
             {
                 Type = Kingmaker.RuleSystem.Rules.Damage.DamageType.Energy,
                 Energy = Kingmaker.Enums.Damage.DamageEnergyType.Cold
+            };
+        }
+
+        internal static DamageTypeDescription LDamage()
+        {
+            return new()
+            {
+                Type = Kingmaker.RuleSystem.Rules.Damage.DamageType.Energy,
+                Energy = Kingmaker.Enums.Damage.DamageEnergyType.Electricity
+            };
+        }
+
+        internal static DamageTypeDescription FDamage()
+        {
+            return new()
+            {
+                Type = Kingmaker.RuleSystem.Rules.Damage.DamageType.Energy,
+                Energy = Kingmaker.Enums.Damage.DamageEnergyType.Fire
             };
         }
 
@@ -527,6 +686,8 @@ namespace PhoenixKineticistElements
                 }
             };
         }
+
+        #endregion
 
         private static AbilityKineticist.DamageInfo[] GetTeasers(BlastElement element)
         {
@@ -612,6 +773,10 @@ namespace PhoenixKineticistElements
             }
         }
 
+
+
+
+
         public static FeatureConfigurator AddFireFocusPrerequisite(this FeatureConfigurator featureConfigurator)
         {
             return featureConfigurator.AddPrerequisiteFeaturesFromList(features: new() { "13bdf8d542811ac4ca228a53aa108145", "caa7edca64af1914d9e14785beb6a143", "56e2fc3abed8f2247a621ac37e75f303", "d4a2a75d01d1e77489ff692636a538bf" }, amount: 1);
@@ -632,9 +797,123 @@ namespace PhoenixKineticistElements
             return featureConfigurator.AddPrerequisiteFeaturesFromList(features: new() { "c6816ad80a3df9c4ea7d3b012b06bacd", "d2a93ab18fcff8c419b03a2c3d573606", "956b65effbf37e5419c13100ab4385a3", "c43d9c2d23e56fb428a4eb60da9ba1cb" }, amount: 1);
         }
 
-        public static FeatureConfigurator AddLightFocusPrerequisite(this    FeatureConfigurator featureConfigurator)
+        public static FeatureConfigurator AddLightFocusPrerequisite(this FeatureConfigurator featureConfigurator)
         {
             return featureConfigurator.AddPrerequisiteFeaturesFromList(features: new() { "ElementalFocusLight", "KineticKnightElementalFocusLight", "SecondaryElementLight", "ThirdElementLight" }, amount: 1);
         }
+
+        private static void CreateDeeperUniversalBlasts(BlastElement element)
+        {
+
+            MakeSpindleXBlastAbility(element);
+        }
+
+        #region vanilla form infusion helpers
+
+        public static void MakeSpindleXBlastAbility(BlastElement element)
+        {
+            ActionsBuilder damageAction = ActionsBuilder.New();
+            if (element.damageType.Length == 1 && element.Physical)
+            {
+                damageAction.DealDamage(damageType: element.damageType[0], value: (element.Composite ? PhysicalCompositeBlastDice() : PhysicalSimpleBlastDice()), half: true);//IsALreadyHalved missing? //TODO
+            }
+            else if (element.damageType.Length == 2 && element.Physical)
+            {
+
+            }
+
+
+            var spindle = BlueprintTool.Get<BlueprintAbility>("a28e54e4e5fafd1449dd9e926be85160");
+            var guid = Main.LocalPKEModContext.Blueprints.GetDerivedGUID($"Spindle{element.Name}BlastAbility", spindle.AssetGuid, BlueprintTool.Get<BlueprintFeature>(element.FeatureGuid).AssetGuid);
+
+            AbilityConfigurator.New($"Spindle{element.Name}BlastAbility", guid.m_Guid.ToString())
+                .SetDisplayName(spindle.m_DisplayName)
+                .SetDescription(spindle.m_Description)
+            .Configure();
+        }
+
+        public static void MakeExplodingArrowsXBlastAbility(BlastElement element) { }
+
+        public static void MakeXTorrentBlastAbility(BlastElement element)
+        {
+
+        }
+
+        public static void MakeXCloud(BlastElement element)
+        {
+
+
+            static void MakeCloudXBlastAbility(BlastElement element)
+            {
+
+            }
+
+            static void MakeCloudXCBlastArea(BlastElement element)
+            {
+
+            }
+        }
+
+        public static void CycloneXBlastAbility(BlastElement element)
+        {
+
+        }
+
+        public static void MakeXDeadlyEarth(BlastElement element)
+        {
+            static void MakeDeadlyEarthXBlastAbility(BlastElement element)
+            {
+
+            }
+            static void MakeDeadlyEarthXBlastArea(BlastElement element)
+            {
+
+            }
+        }
+
+        public static void MakeEruptionXBlastAbility(BlastElement element)
+        {
+
+        }
+
+        public static void MakeFanOfFlamesXBlastAbility(BlastElement element)
+        {
+
+        }
+
+        public static void MakeFragmentationXBlastAbility(BlastElement element)
+        {
+
+        }
+
+        public static void MakeSprayXBlastAbility(BlastElement element)
+        {
+
+        }
+
+        public static void MakeXWall(BlastElement element)
+        {
+
+            static void MakeWallXBlastAbility(BlastElement element) { }
+            ;
+            static void MakeWallXBlastArea(BlastElement element) { }
+            ;
+
+        }
+
+        #endregion
+
+        #region DarkCodex Form Helpers
+
+        public static void MakeChainXBlastAbility(BlastElement element) { }
+        public static void MakeImpaleXBlastAbility(BlastElement element) { }
+
+        
+
+
+        #endregion
+
+
     }
+
 }

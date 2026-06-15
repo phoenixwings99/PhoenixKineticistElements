@@ -87,12 +87,88 @@
     "Key": "RainbowKineticBlade.Name",
     "enGB": "Rainbow Blast — Kinetic Blade"
   },
+
+
+
   {
-    "Key": "BasicKinesisFeatureSelection.Desc",
-    "enGB": "Basic Kinesis"
+    "Key": "CrystalBlastAbility.Name",
+    "enGB": "Crystal Blast"
   },
   {
+    "Key": "CrystalBlast.Name",
+    "enGB": "Crystal Blast"
+  },
+  {
+    "Key": "CrystalBlastAbility.Desc",
+    "enGB": "Element(s) earth and light; Type composite blast (Sp); Level --; Burn 2; Aura conjuration (creation) [earth, light]\nPrerequisite(s) earth blast, light blast\nBlast Type physical; Damage half bludgeoning, half slashing \nYou fire glowing crystals of light at your foes. "
+  },
+  {
+    "Key": "CrystalKineticBlade.Name",
+    "enGB": "Crystal Blast — Kinetic Blade"
+  },
+
+  {
+    "Key": "BioluminescentBlastAbility.Name",
+    "enGB": "Bioluminescent  Blast"
+  },
+  {
+    "Key": "BioluminescentBlast.Name",
+    "enGB": "Bioluminescent Blast"
+  },
+  {
+    "Key": "BioluminescentBlastAbility.Desc",
+    "enGB": "Element(s) wood and light; Type composite blast (Sp); Level --; Burn 2; Aura conjuration (creation) [light]\nPrerequisite(s) wood blast, light blast\nBlast Type physical; Damage half bludgeoning, half slashing \nYour arboreal assaults are bursting with internal light. . "
+  },
+  {
+    "Key": "BioluminescentKineticBlade.Name",
+    "enGB": "Bioluminescent Blast — Kinetic Blade"
+  },
+
+  {
+    "Key": "LightningBlastAbility.Name",
+    "enGB": "Lightning Blast"
+  },
+  {
+    "Key": "LightningBlast.Name",
+    "enGB": "Lightning Blast"
+  },
+  {
+    "Key": "LightningBlastAbility.Desc",
+    "enGB": "Element(s) air and light; Type composite blast (Sp); Level --; Burn 2; Aura conjuration (creation) [electricity,light]\nPrerequisite(s) electric blast, light blast\nBlast Type physical; Damage half bludgeoning, half lightning \nYou form a glowing white bolt of lightning to batter foes. . "
+  },
+  {
+    "Key": "LightningKineticBlade.Name",
+    "enGB": "Lightning Blast — Kinetic Blade"
+  },
+
+
+  {
+    "Key": "SolarBlastAbility.Name",
+    "enGB": "Solar Blast"
+  },
+  {
+    "Key": "SolarBlast.Name",
+    "enGB": "SolarBlast"
+  },
+  {
+    "Key": "SolarBlastAbility.Desc",
+    "enGB": "Element(s) fire and light; Type composite blast (Sp); Level --; Burn 2; Aura conjuration (creation) [electricity,fire]\nPrerequisite(s) electric blast, light blast\nBlast Type physical; Damage half bludgeoning, half fire \nYou create an explosion of light and heat upon impact. "
+  },
+  {
+    "Key": "SolarKineticBlade.Name",
+    "enGB": "Solar Blast — Kinetic Blade"
+  },
+
+
+
+
+  {
     "Key": "BasicKinesisFeatureSelection.Name",
+    "enGB": "Basic Kinesis"
+  },
+
+  {
+    "Key": "BasicKinesisFeatureSelection.Desc",
     "enGB": "A kineticist gains the basic utility of any element she selects as a bonus wild talent, or any valid replacement talent."
   },
 
@@ -204,6 +280,20 @@
   {
 
     "Key": "BasicPhotokinesis.Desc",
+    "enGB": "Currently no in-game effect. \nTT: You can create up to 3 different points of light, as per the light cantrip, as well as altering the perceived color of an object up to 5 lbs. for 1 minute."
+
+  },
+
+  {
+
+    "Key": "BasicPyrokinesis",
+    "ProcessTemplates": false,
+    "enGB": "Basic Pyrokinesis"
+  },
+
+  {
+
+    "Key": "BasicPyrokinesis.Desc",
     "enGB": "Currently no in-game effect. \nTT: You can create up to 3 different points of light, as per the light cantrip, as well as altering the perceived color of an object up to 5 lbs. for 1 minute."
 
   }

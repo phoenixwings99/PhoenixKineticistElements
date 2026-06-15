@@ -61,11 +61,16 @@ namespace PhoenixKineticistElements
 
             ProgressionConfigurator.For("b79e92dd495edd64e90fb483c504b8df").AddToLevelEntry(1, "BasicKinesisFeatureSelection").Configure();
 
+            
+
         }
 
-        
-
-        
-
+        internal static void Patch()
+        {
+            if (Main.IsKineticistArchetypesInstalled())
+            {
+                ArchetypeConfigurator.For("022742CC-A0CD-414C-98EE-D87F24AE5607").AddToRemoveFeatures(1, "9B6962F7-D65E-4A86-8C85-34C09F503BF0").Configure();
+            }
+        }
     }
 }
